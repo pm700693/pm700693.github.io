@@ -15,40 +15,42 @@
   <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 
   <!-- Meta for theme-color on mobile -->
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#eaf6ff" />
 
   <style>
     /* =====================
        VARIABLES & BASE
        ===================== */
     :root{
-      --bg: #0b1220;
-      --card: #071025;
-      --muted: #94a3b8;
-      --accent: #7c3aed;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --text: #e6eef8;
+      --bg: #eaf6ff;      /* light-blue page background */
+      --card: #ffffff;    /* white cards */
+      --muted: #50667a;
+      --accent: #2563eb;  /* vivid blue accent */
+      --accent-2: #06b6d4;
+      --glass: rgba(37,99,235,0.04);
+      --glass-2: rgba(2,6,23,0.03);
+      --text: #072034;
       --success: #16a34a;
       --mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg: #f7fafc; --card: #ffffff; --muted:#475569; --accent:#6d28d9; --glass: rgba(2,6,23,0.03); --text:#07122b;
-      }
     }
 
     *{box-sizing:border-box}
     html,body{height:100%;}
     body{
-      margin:0; font-family:var(--mono); background:linear-gradient(180deg,var(--bg), #071029 60%); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.45;
+      margin:0; font-family:var(--mono); background:radial-gradient(circle at 10% 10%, rgba(37,99,235,0.06), transparent 10%), linear-gradient(180deg,var(--bg), #ffffff 60%); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.45;
       transition:background .35s ease,color .25s ease;
+      overflow-x:hidden;
     }
+
+    /* Subtle moving background blobs */
+    .bg-blob{position:fixed;right:-120px;top:-80px;width:360px;height:360px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));filter:blur(48px);opacity:0.12;pointer-events:none;mix-blend-mode:screen;animation:blobMove 18s ease-in-out infinite alternate}
+    .bg-blob--small{left:-80px;bottom:-60px;width:260px;height:260px;animation-duration:22s;opacity:0.08}
+    @keyframes blobMove{to{transform:translateY(36px) translateX(-18px) scale(1.08)}}
 
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important}
+      .bg-blob{display:none}
     }
 
     /* =====================
@@ -57,32 +59,36 @@
     .container{max-width:1100px;margin:32px auto;padding:24px;}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#3b82f6);box-shadow:0 6px 20px rgba(0,0,0,0.45)}
-    .logo svg{width:34px;height:34px}
-    h1{margin:0;font-size:1.1rem;font-weight:800;letter-spacing:.4px}
+    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#3b82f6);box-shadow:0 10px 30px rgba(37,99,235,0.08)}
+    .logo svg{width:36px;height:36px}
+    h1{margin:0;font-size:1.12rem;font-weight:800;letter-spacing:.4px}
     p.lead{margin:0;color:var(--muted);font-size:.95rem}
 
     .controls{display:flex;gap:8px;align-items:center}
-    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:10px 14px;border-radius:10px;cursor:pointer;color:var(--text);display:inline-flex;gap:8px;align-items:center}
-    .btn:hover{transform:translateY(-3px)}
+    .btn{background:transparent;border:1px solid rgba(7,32,52,0.06);padding:10px 14px;border-radius:10px;cursor:pointer;color:var(--text);display:inline-flex;gap:8px;align-items:center;backdrop-filter:blur(6px)}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(37,99,235,0.06)}
 
-    main{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:28px}
+    main{display:grid;grid-template-columns:1fr 380px;gap:28px;margin-top:28px}
 
     /* =====================
        HERO / PROFILE CARD
        ===================== */
-    .card{background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.02));border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .card{background:var(--card);border-radius:16px;padding:22px;box-shadow:0 12px 30px rgba(15,37,51,0.06);border:1px solid rgba(2,6,23,0.04)}
 
     .hero{display:flex;gap:20px;align-items:center}
-    .avatar{width:120px;height:120px;border-radius:14px;overflow:hidden;flex-shrink:0;border:1px solid rgba(255,255,255,0.06)}
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .avatar{width:128px;height:128px;border-radius:16px;overflow:hidden;flex-shrink:0;border:1px solid rgba(7,32,52,0.06);box-shadow:0 8px 26px rgba(37,99,235,0.06);transform:translateY(0)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.9,.25,1)}
+    .avatar:hover img{transform:scale(1.04) rotate(-1deg)}
 
     .hero .meta{flex:1}
     .meta h2{margin:0;font-size:1.6rem}
     .meta p{margin:6px 0;color:var(--muted)}
 
     .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .pill{background:var(--glass);padding:8px 10px;border-radius:999px;font-weight:600;font-size:.85rem}
+    .pill{background:linear-gradient(90deg, rgba(37,99,235,0.06), rgba(6,182,212,0.03));padding:8px 10px;border-radius:999px;font-weight:600;font-size:.85rem;border:1px solid rgba(7,32,52,0.03)}
+
+    /* skill fill animation */
+    .skill .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width 900ms cubic-bezier(.2,.9,.25,1)}
 
     /* =====================
        SKILLS & TIMELINE
@@ -91,21 +97,20 @@
     .section h3{margin:0 0 10px 0}
 
     .skills{display:flex;flex-wrap:wrap;gap:10px}
-    .skill{min-width:100px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:10px;border-radius:10px}
-    .skill .bar{height:8px;background:var(--glass-2);border-radius:999px;overflow:hidden;margin-top:8px}
-    .skill .bar > i{display:block;height:100%;width:60%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#06b6d4)}
+    .skill{min-width:120px;background:linear-gradient(180deg,rgba(2,6,23,0.01),rgba(2,6,23,0.00));padding:12px;border-radius:10px}
+    .skill .bar{height:10px;background:rgba(2,6,23,0.04);border-radius:999px;overflow:hidden;margin-top:8px}
 
     .timeline{display:flex;flex-direction:column;gap:12px}
-    .entry{display:flex;gap:12px}
-    .entry .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:6px}
-    .entry .content{background:var(--glass);padding:12px;border-radius:8px;flex:1}
+    .entry{display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(12px)}
+    .entry .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:6px;box-shadow:0 6px 14px rgba(37,99,235,0.08)}
+    .entry .content{background:linear-gradient(180deg,rgba(2,6,23,0.01),transparent);padding:14px;border-radius:10px;flex:1;border:1px solid rgba(2,6,23,0.03)}
 
     /* =====================
        SIDEBAR (RIGHT)
        ===================== */
     aside{position:sticky;top:28px}
     .contact-list{display:flex;flex-direction:column;gap:8px}
-    .contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:8px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.01))}
+    .contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(37,99,235,0.02),transparent);border:1px solid rgba(7,32,52,0.02)}
 
     /* =====================
        CV & PRINT STYLES
@@ -126,15 +131,20 @@
     @media (max-width:980px){
       main{grid-template-columns:1fr;}
       aside{position:static}
+      .avatar{width:100px;height:100px}
     }
 
     /* little micro-interactions */
     .faint{opacity:.75}
-    .underline{background:linear-gradient(90deg,var(--accent),#06b6d4);height:3px;border-radius:3px;margin-top:8px}
+    .underline{background:linear-gradient(90deg,var(--accent),var(--accent-2));height:4px;border-radius:3px;margin-top:8px}
 
   </style>
 </head>
 <body>
+
+  <!-- moving background blobs -->
+  <div class="bg-blob" aria-hidden></div>
+  <div class="bg-blob bg-blob--small" aria-hidden></div>
 
   <div class="container">
     <header>
@@ -154,7 +164,7 @@
 
       <div class="controls">
         <button class="btn" id="downloadPdf" title="Download printable CV"><i class="fa fa-file-pdf"></i>Download PDF</button>
-        <button class="btn" id="toggleTheme" aria-pressed="false" title="Toggle theme"><i class="fa fa-adjust"></i>Toggle</button>
+        <button class="btn" id="toggleTheme" aria-pressed="false" title="Toggle theme"><i class="fa fa-adjust"></i>Light/Dark</button>
       </div>
     </header>
 
@@ -181,12 +191,12 @@
           <div class="section" data-aos="fade-up" data-aos-delay="120">
             <h3>About</h3>
             <p class="faint">I design intuitive products and build front-ends with performance and accessibility in mind. I like shipping small, measurable improvements and collaborating with engineers and product teams.</p>
-            <div class="underline" style="width:90px"></div>
+            <div class="underline" style="width:120px"></div>
           </div>
 
           <div class="section" data-aos="fade-up" data-aos-delay="220">
             <h3>Experience</h3>
-            <div class="timeline">
+            <div class="timeline" id="timeline">
               <div class="entry">
                 <div class="dot" aria-hidden></div>
                 <div class="content">
@@ -204,27 +214,36 @@
                   <p class="faint">Led design for mobile and web features, ran user research and prototyping.</p>
                 </div>
               </div>
+
+              <div class="entry">
+                <div class="dot" aria-hidden></div>
+                <div class="content">
+                  <strong>UX Intern — Company C</strong>
+                  <div class="faint">2018 — 2019</div>
+                  <p class="faint">Prototyped flows and assisted with usability testing.</p>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="section" data-aos="fade-up" data-aos-delay="320">
             <h3>Skills</h3>
-            <div class="skills">
+            <div class="skills" id="skills">
               <div class="skill">
                 <div><strong>React • TypeScript</strong></div>
-                <div class="bar"><i style="width:80%"></i></div>
+                <div class="bar"><i data-fill="85%" style="width:0%"></i></div>
               </div>
               <div class="skill">
                 <div><strong>Design Systems</strong></div>
-                <div class="bar"><i style="width:68%"></i></div>
+                <div class="bar"><i data-fill="72%" style="width:0%"></i></div>
               </div>
               <div class="skill">
                 <div><strong>Accessibility</strong></div>
-                <div class="bar"><i style="width:78%"></i></div>
+                <div class="bar"><i data-fill="80%" style="width:0%"></i></div>
               </div>
               <div class="skill">
                 <div><strong>Performance</strong></div>
-                <div class="bar"><i style="width:72%"></i></div>
+                <div class="bar"><i data-fill="75%" style="width:0%"></i></div>
               </div>
             </div>
           </div>
@@ -325,6 +344,7 @@
   <!-- SCRIPTS: GSAP + AOS + small helpers -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <!-- jsPDF for quick PDF generation (print more reliable) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -333,24 +353,35 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     AOS.init({duration:700, once:true, offset:80});
 
-    // Theme toggle: toggles a data-theme attr on body and remembers in localStorage
+    // Theme toggle: toggles between light-blue (default) and dark mode and remembers in localStorage
     const btnTheme = document.getElementById('toggleTheme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const saved = localStorage.getItem('theme');
-    if(saved === 'light') document.documentElement.style.setProperty('--bg','#f7fafc');
-    if(!saved && prefersDark) document.documentElement.style.setProperty('--bg','#0b1220');
+    if(saved === 'dark') applyDark();
 
     btnTheme.addEventListener('click', ()=>{
-      const cur = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
-      const isDark = cur.startsWith('#0b');
-      if(isDark){
-        document.documentElement.style.setProperty('--bg','#f7fafc');
-        localStorage.setItem('theme','light');
-      } else {
-        document.documentElement.style.setProperty('--bg','#0b1220');
-        localStorage.setItem('theme','dark');
-      }
+      const cur = localStorage.getItem('theme');
+      if(cur === 'dark'){ localStorage.setItem('theme','light'); applyLight(); }
+      else { localStorage.setItem('theme','dark'); applyDark(); }
     });
+
+    function applyDark(){
+      document.documentElement.style.setProperty('--bg','#071029');
+      document.documentElement.style.setProperty('--card','#071025');
+      document.documentElement.style.setProperty('--text','#e6eef8');
+      document.documentElement.style.setProperty('--muted','#94a3b8');
+      document.documentElement.style.setProperty('--accent','#7c3aed');
+      document.documentElement.style.setProperty('--accent-2','#06b6d4');
+      document.documentElement.style.setProperty('meta[name="theme-color"]', '#071029');
+    }
+    function applyLight(){
+      document.documentElement.style.setProperty('--bg','#eaf6ff');
+      document.documentElement.style.setProperty('--card','#ffffff');
+      document.documentElement.style.setProperty('--text','#072034');
+      document.documentElement.style.setProperty('--muted','#50667a');
+      document.documentElement.style.setProperty('--accent','#2563eb');
+      document.documentElement.style.setProperty('--accent-2','#06b6d4');
+      document.documentElement.style.setProperty('meta[name="theme-color"]', '#eaf6ff');
+    }
 
     // Modal
     const cvModal = document.getElementById('cvModal');
@@ -371,13 +402,10 @@
 
     // Download printable PDF using the browser print is best. For quick single-click, we use jsPDF to snapshot
     document.getElementById('downloadPdf').addEventListener('click', async ()=>{
-      // Prefer native print for fidelity. Offer both.
       if(confirm('For best results use browser Print (Ctrl/⌘ + P). Click OK to auto-open print dialog.')){
         window.print();
         return;
       }
-
-      // Fallback: simple PDF generation of the main container (text-only fallback)
       try{
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({unit:'pt', format:'a4'});
@@ -391,39 +419,59 @@
       }
     });
 
-    // small GSAP animation for hero
-    gsap.from('.logo', {y:-10, opacity:0, duration:0.7});
-    gsap.from('.hero .meta h2', {x:-20, opacity:0, delay:0.15, duration:0.7});
-    gsap.from('.pills .pill', {y:6, opacity:0, delay:0.25, stagger:0.08});
+    // GSAP animations: logo, hero, avatar, timeline, skills
+    gsap.from('.logo', {y:-12, opacity:0, duration:0.8, ease:'power2.out'});
+    gsap.from('.hero .meta h2', {x:-24, opacity:0, delay:0.15, duration:0.8, ease:'power3.out'});
+    gsap.from('.pills .pill', {y:8, opacity:0, delay:0.25, stagger:0.08, ease:'back.out(1.2)'});
 
-    // Typing-like headline effect
+    // avatar float and subtle tilt on mouse
+    gsap.to('.avatar', {y:-6, duration:4, repeat:-1, yoyo:true, ease:'sine.inOut'});
+    document.querySelector('.avatar').addEventListener('mousemove', e=>{
+      const r = e.target.getBoundingClientRect();
+      const cx = (e.clientX - r.left) - r.width/2; const cy = (e.clientY - r.top) - r.height/2;
+      gsap.to('.avatar img', {rotationX: (-cy/20), rotationY:(cx/20), transformPerspective:400, duration:0.6, ease:'power2.out'});
+    });
+    document.querySelector('.avatar').addEventListener('mouseleave', ()=>{ gsap.to('.avatar img', {rotationX:0, rotationY:0, duration:0.6, ease:'power2.out'}); });
+
+    // reveal timeline entries one by one when scrolled into view using ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.entry').forEach((el, i)=>{
+      gsap.to(el, {opacity:1, y:0, duration:0.7, delay:i*0.12, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 85%'}});
+    });
+
+    // animate skill bars when skills container enters viewport
+    ScrollTrigger.create({
+      trigger: '#skills', start: 'top 85%', onEnter: ()=>{
+        document.querySelectorAll('#skills .bar > i').forEach((bar,idx)=>{
+          const w = bar.getAttribute('data-fill') || '70%';
+          setTimeout(()=>{ bar.style.width = w; }, idx*120);
+        });
+      }
+    });
+
+    // typing-like headline effect (gentler)
     (function headline(){
       const el = document.getElementById('headline');
-      const phrases = ['I build delightful web experiences.','I design interfaces with accessibility in mind.','I optimise for performance and scale.'];
-      let i=0, j=0; let forward=true; let cur='';
-      function step(){
-        const full = phrases[i];
-        if(forward){ cur = full.slice(0, j+1); j++; if(j===full.length){ forward=false; setTimeout(step,1200); return; } }
-        else{ cur = full.slice(0,j-1); j--; if(j===0){ forward=true; i=(i+1)%phrases.length; } }
-        el.querySelector('#name')?.replaceWith(document.createTextNode(document.getElementById('name').textContent));
-        el.childNodes[2] && (el.childNodes[2].textContent = ' ' + cur);
-        setTimeout(step, forward?80:40);
+      const texts = ['I build delightful web experiences.','I design interfaces with accessibility in mind.','I optimise for performance and scale.'];
+      let t=0, char=0;
+      function tick(){
+        const full = texts[t];
+        char++;
+        el.childNodes[2] && (el.childNodes[2].textContent = ' ' + full.slice(0,char));
+        if(char >= full.length){ setTimeout(()=>{ char=0; t=(t+1)%texts.length; tick(); }, 1000); return; }
+        setTimeout(tick, 60);
       }
-      // clamp to reduced-motion
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      // attach a small extra text node to headline
-      el.appendChild(document.createTextNode(' '));
-      el.appendChild(document.createTextNode(''));
-      step();
+      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.appendChild(document.createTextNode(' ')); el.appendChild(document.createTextNode('')); tick(); }
     })();
 
     // Accessibility helpers: focus outline for keyboard users
     (function focusOutline(){
-      function handleFirstTab(e){
-        if(e.key === 'Tab'){ document.body.classList.add('show-focus'); window.removeEventListener('keydown', handleFirstTab); }
-      }
+      function handleFirstTab(e){ if(e.key === 'Tab'){ document.body.classList.add('show-focus'); window.removeEventListener('keydown', handleFirstTab); }}
       window.addEventListener('keydown', handleFirstTab);
     })();
+
+    // small helper: staggered entrance for cards
+    gsap.from('.card', {y:18, opacity:0, duration:0.8, stagger:0.06, ease:'power3.out'});
 
   </script>
 </body>
