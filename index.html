@@ -170,7 +170,11 @@
     <main class="content">
       <section class="section" id="summary">
         <h3 style="margin-top:0">Summary</h3>
-        <p class="summary">Product-focused frontend engineer with 10+ years building performant, accessible, and delightful web experiences. I lead component design, optimize front-end performance, and collaborate closely with cross-functional teams to ship production-grade features.</p>
+        <!-- Animated summary: typing effect with reduced-motion fallback -->
+        <p class="summary" aria-live="polite">
+          <span id="summaryText" data-text="Product-focused frontend engineer with 10+ years building performant, accessible, and delightful web experiences. I lead component design, optimize front-end performance, and collaborate closely with cross-functional teams to ship production-grade features.">Product-focused frontend engineer with 10+ years building performant, accessible, and delightful web experiences. I lead component design, optimize front-end performance, and collaborate closely with cross-functional teams to ship production-grade features.</span>
+          <noscript> (Enable JavaScript to see the animated summary.)</noscript>
+        </p>
       </section>
 
       <section class="section" id="experience">
@@ -235,6 +239,8 @@
         entries.forEach(e=>{
           if(e.isIntersecting){
             e.target.classList.add('visible');
+            // If this is the summary section, trigger the typewriter
+            if(e.target.id === 'summary') startTypewriter();
             obs.unobserve(e.target);
           }
         });
@@ -247,7 +253,6 @@
     (function(){
       const bars = document.querySelectorAll('.bar > i');
       bars.forEach(b=>{
-        // already set width inline; use a small delay for animation
         const w = b.style.width || '0%';
         b.style.width = '0%';
         requestAnimationFrame(()=>{
@@ -256,9 +261,44 @@
       });
     })();
 
+    // Typewriter animation for the summary
+    function startTypewriter(){
+      const el = document.getElementById('summaryText');
+      if(!el) return;
+      const full = el.getAttribute('data-text') || el.textContent.trim();
+      // If already typed (e.g., user navigated back), don't re-run
+      if(el.dataset.typed === '1') return;
+      // Respect prefers-reduced-motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced){ el.textContent = full; el.dataset.typed = '1'; return; }
+
+      el.textContent = '';
+      el.style.whiteSpace = 'pre-wrap';
+      el.setAttribute('aria-hidden','false');
+      const cursor = document.createElement('span');
+      cursor.setAttribute('aria-hidden','true');
+      cursor.className = 'tw-caret';
+      cursor.textContent = '▊';
+      el.parentNode.appendChild(cursor);
+
+      let idx = 0;
+      const speed = 18 + Math.floor(Math.random()*14); // 18-32ms per char
+      function step(){
+        if(idx <= full.length){
+          el.textContent = full.slice(0, idx);
+          idx++;
+          setTimeout(step, speed + (Math.random()*30));
+        } else {
+          // done
+          cursor.remove();
+          el.dataset.typed = '1';
+        }
+      }
+      step();
+    }
+
     // Download PDF placeholder — replace with your hosted PDF file or use print() to print to PDF
     document.getElementById('download').addEventListener('click', ()=>{
-      // If you have a resume.pdf in the repo root, this will download from GitHub Pages.
       const pdfUrl = './resume.pdf';
       fetch(pdfUrl, {method:'HEAD'}).then(r=>{
         if(r.ok) window.location.href = pdfUrl;
