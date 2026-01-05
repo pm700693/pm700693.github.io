@@ -129,6 +129,39 @@
       .bar > i{transition:none}
       .section{transition:none}
     }
+      @media print {
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    padding: 0;
+    background: white !important;
+  }
+
+  /* Allow full image display */
+  .photo {
+    height: auto !important;   /* REMOVE fixed height */
+  }
+
+  .photo img {
+    width: 100% !important;
+    height: auto !important;   /* Maintain aspect ratio */
+    object-fit: contain !important;
+  }
+
+  /* Prevent cutting cards across pages */
+  .panel,
+  .content,
+  .item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -207,10 +240,7 @@ Composer), Aws &amp; CSS</span><span>95%</span></div>
 
       </div>
 
-      <div style="margin-top:18px;display:flex;gap:8px;">
-        <button class="btn" id="download">Download PDF</button>
-        <button class="btn outline" id="copyEmail">Copy Email</button>
-      </div>
+      
 
       <footer style="margin-top:12px">Contact - +91-9728514902</footer>
     </aside>
