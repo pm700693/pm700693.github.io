@@ -5,474 +5,268 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Your Name — Personal Website & CV</title>
 
-  <!-- Google Fonts -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- AOS for scroll animations -->
+  <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-  <!-- Font Awesome (icons) -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 
-  <!-- Meta for theme-color on mobile -->
   <meta name="theme-color" content="#eaf6ff" />
 
   <style>
-    /* =====================
-       VARIABLES & BASE
-       ===================== */
     :root{
-      --bg: #eaf6ff;      /* light-blue page background */
-      --card: #ffffff;    /* white cards */
-      --muted: #50667a;
-      --accent: #2563eb;  /* vivid blue accent */
-      --accent-2: #06b6d4;
-      --glass: rgba(37,99,235,0.04);
-      --glass-2: rgba(2,6,23,0.03);
-      --text: #072034;
-      --success: #16a34a;
-      --mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      --bg:#eaf6ff;
+      --card:#ffffff;
+      --text:#072034;
+      --muted:#50667a;
+      --accent:#2563eb;
+      --accent-2:#06b6d4;
+      --font:'Inter',system-ui;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%;}
     body{
-      margin:0; font-family:var(--mono); background:radial-gradient(circle at 10% 10%, rgba(37,99,235,0.06), transparent 10%), linear-gradient(180deg,var(--bg), #ffffff 60%); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.45;
-      transition:background .35s ease,color .25s ease;
+      margin:0;
+      font-family:var(--font);
+      background:radial-gradient(circle at 10% 10%, rgba(37,99,235,.08), transparent 30%),
+                 linear-gradient(180deg,var(--bg),#fff);
+      color:var(--text);
       overflow-x:hidden;
     }
 
-    /* Subtle moving background blobs */
-    .bg-blob{position:fixed;right:-120px;top:-80px;width:360px;height:360px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));filter:blur(48px);opacity:0.12;pointer-events:none;mix-blend-mode:screen;animation:blobMove 18s ease-in-out infinite alternate}
-    .bg-blob--small{left:-80px;bottom:-60px;width:260px;height:260px;animation-duration:22s;opacity:0.08}
-    @keyframes blobMove{to{transform:translateY(36px) translateX(-18px) scale(1.08)}}
+    /* Background blobs */
+    .bg-blob{
+      position:fixed;
+      width:340px;height:340px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      filter:blur(50px);
+      opacity:.12;
+      border-radius:50%;
+      top:-80px;right:-120px;
+      animation:float 20s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+    .bg-blob.small{
+      width:260px;height:260px;
+      left:-80px;bottom:-60px;
+      animation-duration:26s;
+    }
+    @keyframes float{to{transform:translate(30px,30px) scale(1.1)}}
 
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important}
-      .bg-blob{display:none}
+    .container{max-width:1100px;margin:32px auto;padding:24px}
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
     }
 
-    /* =====================
-       LAYOUT
-       ===================== */
-    .container{max-width:1100px;margin:32px auto;padding:24px;}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#3b82f6);box-shadow:0 10px 30px rgba(37,99,235,0.08)}
-    .logo svg{width:36px;height:36px}
-    h1{margin:0;font-size:1.12rem;font-weight:800;letter-spacing:.4px}
-    p.lead{margin:0;color:var(--muted);font-size:.95rem}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:56px;height:56px;
+      border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),#3b82f6);
+      color:#fff;font-weight:800;
+      box-shadow:0 12px 30px rgba(37,99,235,.2);
+    }
 
-    .controls{display:flex;gap:8px;align-items:center}
-    .btn{background:transparent;border:1px solid rgba(7,32,52,0.06);padding:10px 14px;border-radius:10px;cursor:pointer;color:var(--text);display:inline-flex;gap:8px;align-items:center;backdrop-filter:blur(6px)}
-    .btn:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(37,99,235,0.06)}
+    h1{margin:0;font-size:1.1rem}
+    .lead{margin:0;color:var(--muted)}
 
-    main{display:grid;grid-template-columns:1fr 380px;gap:28px;margin-top:28px}
+    .btn{
+      border:1px solid rgba(0,0,0,.08);
+      background:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-3px)}
 
-    /* =====================
-       HERO / PROFILE CARD
-       ===================== */
-    .card{background:var(--card);border-radius:16px;padding:22px;box-shadow:0 12px 30px rgba(15,37,51,0.06);border:1px solid rgba(2,6,23,0.04)}
+    main{
+      display:grid;
+      grid-template-columns:1fr 380px;
+      gap:28px;
+      margin-top:28px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 16px 40px rgba(0,0,0,.06);
+      border:1px solid rgba(0,0,0,.04);
+    }
 
     .hero{display:flex;gap:20px;align-items:center}
-    .avatar{width:128px;height:128px;border-radius:16px;overflow:hidden;flex-shrink:0;border:1px solid rgba(7,32,52,0.06);box-shadow:0 8px 26px rgba(37,99,235,0.06);transform:translateY(0)}
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.9,.25,1)}
-    .avatar:hover img{transform:scale(1.04) rotate(-1deg)}
+    .avatar{
+      width:120px;height:120px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(37,99,235,.2);
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover}
 
-    .hero .meta{flex:1}
-    .meta h2{margin:0;font-size:1.6rem}
-    .meta p{margin:6px 0;color:var(--muted)}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .pill{
+      padding:8px 12px;
+      background:rgba(37,99,235,.08);
+      border-radius:999px;
+      font-size:.85rem;
+      font-weight:600;
+    }
 
-    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .pill{background:linear-gradient(90deg, rgba(37,99,235,0.06), rgba(6,182,212,0.03));padding:8px 10px;border-radius:999px;font-weight:600;font-size:.85rem;border:1px solid rgba(7,32,52,0.03)}
-
-    /* skill fill animation */
-    .skill .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width 900ms cubic-bezier(.2,.9,.25,1)}
-
-    /* =====================
-       SKILLS & TIMELINE
-       ===================== */
-    .section{margin-top:20px}
-    .section h3{margin:0 0 10px 0}
+    .section{margin-top:22px}
+    .faint{opacity:.75}
 
     .skills{display:flex;flex-wrap:wrap;gap:10px}
-    .skill{min-width:120px;background:linear-gradient(180deg,rgba(2,6,23,0.01),rgba(2,6,23,0.00));padding:12px;border-radius:10px}
-    .skill .bar{height:10px;background:rgba(2,6,23,0.04);border-radius:999px;overflow:hidden;margin-top:8px}
+    .skill{width:160px}
+    .bar{
+      height:10px;border-radius:999px;
+      background:#e5e7eb;
+      overflow:hidden;margin-top:6px;
+    }
+    .bar i{
+      display:block;height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:999px;
+      transition:width .9s cubic-bezier(.2,.9,.25,1);
+    }
 
-    .timeline{display:flex;flex-direction:column;gap:12px}
-    .entry{display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(12px)}
-    .entry .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:6px;box-shadow:0 6px 14px rgba(37,99,235,0.08)}
-    .entry .content{background:linear-gradient(180deg,rgba(2,6,23,0.01),transparent);padding:14px;border-radius:10px;flex:1;border:1px solid rgba(2,6,23,0.03)}
+    .entry{opacity:0;transform:translateY(16px)}
 
-    /* =====================
-       SIDEBAR (RIGHT)
-       ===================== */
-    aside{position:sticky;top:28px}
-    .contact-list{display:flex;flex-direction:column;gap:8px}
-    .contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(37,99,235,0.02),transparent);border:1px solid rgba(7,32,52,0.02)}
+    aside{position:sticky;top:24px}
 
-    /* =====================
-       CV & PRINT STYLES
-       ===================== */
-    .cv-actions{display:flex;gap:10px}
+    footer{
+      text-align:center;
+      margin-top:32px;
+      color:var(--muted);
+    }
 
-    @media print{
-      body{background:white;color:black}
-      .container{max-width:900px;padding:0}
-      header, .controls, .btn, aside{display:none}
+    @media(max-width:980px){
       main{grid-template-columns:1fr}
-      .card{box-shadow:none;border:0;padding:0}
-    }
-
-    /* =====================
-       RESPONSIVE
-       ===================== */
-    @media (max-width:980px){
-      main{grid-template-columns:1fr;}
       aside{position:static}
-      .avatar{width:100px;height:100px}
     }
-
-    /* little micro-interactions */
-    .faint{opacity:.75}
-    .underline{background:linear-gradient(90deg,var(--accent),var(--accent-2));height:4px;border-radius:3px;margin-top:8px}
-
   </style>
 </head>
 <body>
 
-  <!-- moving background blobs -->
-  <div class="bg-blob" aria-hidden></div>
-  <div class="bg-blob bg-blob--small" aria-hidden></div>
+<div class="bg-blob"></div>
+<div class="bg-blob small"></div>
 
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden>
-          <!-- Simple monogram -->
-          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo">
-            <rect x="6" y="6" width="52" height="52" rx="10" fill="white" opacity="0.06"></rect>
-            <path d="M18 44v-24h8l6 12 6-12h8v24H40v-12l-6 12-6-12v12H18z" fill="white"></path>
-          </svg>
-        </div>
-        <div>
-          <h1>Your Name</h1>
-          <p class="lead">Product Designer · Front-end Engineer · Open-source</p>
-        </div>
-      </div>
+<div class="container">
 
-      <div class="controls">
-        <button class="btn" id="downloadPdf" title="Download printable CV"><i class="fa fa-file-pdf"></i>Download PDF</button>
-        <button class="btn" id="toggleTheme" aria-pressed="false" title="Toggle theme"><i class="fa fa-adjust"></i>Light/Dark</button>
-      </div>
-    </header>
-
-    <main>
-      <!-- LEFT: Main content -->
-      <section>
-        <div class="card" data-aos="fade-up">
-          <div class="hero">
-            <div class="avatar" aria-hidden>
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Your portrait">
-            </div>
-            <div class="meta">
-              <h2 id="headline">Hi, I'm <span id="name">Your Name</span></h2>
-              <p>I'm a designer & developer who builds delightful, accessible web experiences.</p>
-
-              <div class="pills">
-                <span class="pill">Available for hire</span>
-                <span class="pill">Remote</span>
-                <span class="pill">Based in: City, Country</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="section" data-aos="fade-up" data-aos-delay="120">
-            <h3>About</h3>
-            <p class="faint">I design intuitive products and build front-ends with performance and accessibility in mind. I like shipping small, measurable improvements and collaborating with engineers and product teams.</p>
-            <div class="underline" style="width:120px"></div>
-          </div>
-
-          <div class="section" data-aos="fade-up" data-aos-delay="220">
-            <h3>Experience</h3>
-            <div class="timeline" id="timeline">
-              <div class="entry">
-                <div class="dot" aria-hidden></div>
-                <div class="content">
-                  <strong>Senior Frontend Engineer — Company A</strong>
-                  <div class="faint">2022 — Present</div>
-                  <p class="faint">Shipping UI components in a design system, optimizing bundle sizes and improving accessibility.</p>
-                </div>
-              </div>
-
-              <div class="entry">
-                <div class="dot" aria-hidden></div>
-                <div class="content">
-                  <strong>Product Designer — Company B</strong>
-                  <div class="faint">2019 — 2022</div>
-                  <p class="faint">Led design for mobile and web features, ran user research and prototyping.</p>
-                </div>
-              </div>
-
-              <div class="entry">
-                <div class="dot" aria-hidden></div>
-                <div class="content">
-                  <strong>UX Intern — Company C</strong>
-                  <div class="faint">2018 — 2019</div>
-                  <p class="faint">Prototyped flows and assisted with usability testing.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section" data-aos="fade-up" data-aos-delay="320">
-            <h3>Skills</h3>
-            <div class="skills" id="skills">
-              <div class="skill">
-                <div><strong>React • TypeScript</strong></div>
-                <div class="bar"><i data-fill="85%" style="width:0%"></i></div>
-              </div>
-              <div class="skill">
-                <div><strong>Design Systems</strong></div>
-                <div class="bar"><i data-fill="72%" style="width:0%"></i></div>
-              </div>
-              <div class="skill">
-                <div><strong>Accessibility</strong></div>
-                <div class="bar"><i data-fill="80%" style="width:0%"></i></div>
-              </div>
-              <div class="skill">
-                <div><strong>Performance</strong></div>
-                <div class="bar"><i data-fill="75%" style="width:0%"></i></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section" data-aos="fade-up" data-aos-delay="420">
-            <h3>Selected Projects</h3>
-            <ul>
-              <li><strong>Design System</strong> — Built a scaleable design system used by multiple products.</li>
-              <li><strong>Analytics Dashboard</strong> — Rebuilt with React + virtualization for large datasets.</li>
-              <li><strong>Open-source library</strong> — UI utilities and accessibility helpers.</li>
-            </ul>
-          </div>
-
-          <div class="section" data-aos="fade-up" data-aos-delay="520">
-            <h3>Public Speaking & Writing</h3>
-            <p class="faint">Talks about performance, accessibility, and design systems. Articles on Medium and dev.to.</p>
-          </div>
-
-        </div>
-
-        <!-- Projects / More CV details -->
-        <div class="card section" data-aos="fade-up" data-aos-delay="640">
-          <h3>Education</h3>
-          <p class="faint"><strong>University Name</strong> — B.Sc. in Computer Science (2014 — 2018)</p>
-
-          <h3 style="margin-top:14px">Awards</h3>
-          <p class="faint">Recipient of XYZ scholarship; Hackathon winner 2017.</p>
-        </div>
-      </section>
-
-      <!-- RIGHT: Sidebar / CV actions -->
-      <aside>
-        <div class="card" data-aos="fade-left">
-          <h3>Contact</h3>
-          <div class="contact-list">
-            <div class="contact-item"><i class="fa fa-envelope"></i><div><strong>Email</strong><div class="faint">you@domain.com</div></div></div>
-            <div class="contact-item"><i class="fa fa-linkedin"></i><div><strong>LinkedIn</strong><div class="faint">linkedin.com/in/yourname</div></div></div>
-            <div class="contact-item"><i class="fa fa-github"></i><div><strong>GitHub</strong><div class="faint">github.com/yourhandle</div></div></div>
-          </div>
-
-          <div style="height:12px"></div>
-          <div class="cv-actions">
-            <button class="btn" id="openCv"><i class="fa fa-eye"></i>Preview CV</button>
-            <button class="btn" id="downloadJson"><i class="fa fa-download"></i>Download JSON</button>
-          </div>
-
-          <div style="height:14px"></div>
-          <div class="faint">Tip: press <kbd>Ctrl/⌘ + P</kbd> to print this page as a PDF (styled for print).</div>
-        </div>
-
-        <div style="height:18px"></div>
-        <div class="card" data-aos="fade-left" data-aos-delay="120">
-          <h3>Availability</h3>
-          <p class="faint">Open to full-time & contract roles. Available from: <strong>Immediately</strong></p>
-        </div>
-      </aside>
-
-    </main>
-
-    <footer style="margin-top:32px;text-align:center;color:var(--muted)">Built with ❤️ • <span id="year"></span></footer>
+<header>
+  <div class="brand">
+    <div class="logo">YN</div>
+    <div>
+      <h1>Your Name</h1>
+      <p class="lead">Frontend Engineer · Designer</p>
+    </div>
   </div>
+  <button class="btn" id="toggleTheme">Light / Dark</button>
+</header>
 
+<main>
+<section>
+  <div class="card" data-aos="fade-up">
+    <div class="hero">
+      <div class="avatar">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop">
+      </div>
+      <div>
+        <h2>
+          Hi, I’m <strong>Your Name</strong> —
+          <span id="dynamicText"></span>
+        </h2>
+        <p class="faint">I build modern, animated, accessible web experiences.</p>
 
-  <!-- Modal for CV preview -->
-  <dialog id="cvModal" style="border-radius:12px;border:0;padding:0;max-width:900px;width:calc(100% - 40px);">
-    <div style="padding:18px;background:var(--card);color:var(--text);border-radius:12px;">
-      <button id="closeModal" class="btn" style="float:right">Close</button>
-      <h2>Curriculum Vitae — Your Name</h2>
-      <hr />
-      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
-        <div>
-          <h3>Profile</h3>
-          <p class="faint">Concise professional summary that fits 2–3 lines.</p>
-
-          <h3>Work Experience</h3>
-          <p><strong>Company A</strong> — Senior Frontend Engineer (2022 — Present)</p>
-          <ul class="faint">
-            <li>Built components, improved performance by X%.</li>
-            <li>Migrated to TypeScript and reduced runtime errors.</li>
-          </ul>
-
-          <h3>Education</h3>
-          <p class="faint">University Name — B.Sc. Computer Science</p>
-
-        </div>
-        <div style="background:var(--glass);padding:12px;border-radius:10px">
-          <h4>Contact</h4>
-          <div class="faint">you@domain.com</div>
-          <div class="faint">+91 9XXXXXXXXX</div>
-          <h4 style="margin-top:12px">Skills</h4>
-          <div class="faint">React · TypeScript · Accessibility · Design systems · Performance</div>
+        <div class="pills">
+          <span class="pill">Available</span>
+          <span class="pill">Remote</span>
+          <span class="pill">India</span>
         </div>
       </div>
     </div>
-  </dialog>
 
+    <div class="section">
+      <h3>Skills</h3>
+      <div class="skills" id="skills">
+        <div class="skill">
+          React
+          <div class="bar"><i data-fill="85%"></i></div>
+        </div>
+        <div class="skill">
+          JavaScript
+          <div class="bar"><i data-fill="90%"></i></div>
+        </div>
+        <div class="skill">
+          CSS / Animations
+          <div class="bar"><i data-fill="80%"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- SCRIPTS: GSAP + AOS + small helpers -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- jsPDF for quick PDF generation (print more reliable) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<aside>
+  <div class="card" data-aos="fade-left">
+    <h3>Contact</h3>
+    <p class="faint">you@email.com</p>
+    <p class="faint">linkedin.com/in/yourname</p>
+    <p class="faint">github.com/yourname</p>
+  </div>
+</aside>
+</main>
 
-  <script>
-    // init UI
-    document.getElementById('year').textContent = new Date().getFullYear();
-    AOS.init({duration:700, once:true, offset:80});
+<footer>© <span id="year"></span> Your Name</footer>
+</div>
 
-    // Theme toggle: toggles between light-blue (default) and dark mode and remembers in localStorage
-    const btnTheme = document.getElementById('toggleTheme');
-    const saved = localStorage.getItem('theme');
-    if(saved === 'dark') applyDark();
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    btnTheme.addEventListener('click', ()=>{
-      const cur = localStorage.getItem('theme');
-      if(cur === 'dark'){ localStorage.setItem('theme','light'); applyLight(); }
-      else { localStorage.setItem('theme','dark'); applyDark(); }
+<script>
+AOS.init({duration:800,once:true});
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// typing animation (SAFE)
+(function(){
+  const el=document.getElementById('dynamicText');
+  const texts=[
+    'Frontend Engineer.',
+    'UI / UX Designer.',
+    'Performance Focused.'
+  ];
+  let t=0,i=0,dir=1;
+  function tick(){
+    el.textContent=texts[t].slice(0,i);
+    i+=dir;
+    if(i>texts[t].length){dir=-1;setTimeout(tick,1200);return;}
+    if(i<0){dir=1;t=(t+1)%texts.length;}
+    setTimeout(tick,dir>0?70:40);
+  }
+  tick();
+})();
+
+// skill bars
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.create({
+  trigger:'#skills',
+  start:'top 85%',
+  onEnter:()=>{
+    document.querySelectorAll('.bar i').forEach(b=>{
+      b.style.width=b.dataset.fill;
     });
+  }
+});
+</script>
 
-    function applyDark(){
-      document.documentElement.style.setProperty('--bg','#071029');
-      document.documentElement.style.setProperty('--card','#071025');
-      document.documentElement.style.setProperty('--text','#e6eef8');
-      document.documentElement.style.setProperty('--muted','#94a3b8');
-      document.documentElement.style.setProperty('--accent','#7c3aed');
-      document.documentElement.style.setProperty('--accent-2','#06b6d4');
-      document.documentElement.style.setProperty('meta[name="theme-color"]', '#071029');
-    }
-    function applyLight(){
-      document.documentElement.style.setProperty('--bg','#eaf6ff');
-      document.documentElement.style.setProperty('--card','#ffffff');
-      document.documentElement.style.setProperty('--text','#072034');
-      document.documentElement.style.setProperty('--muted','#50667a');
-      document.documentElement.style.setProperty('--accent','#2563eb');
-      document.documentElement.style.setProperty('--accent-2','#06b6d4');
-      document.documentElement.style.setProperty('meta[name="theme-color"]', '#eaf6ff');
-    }
-
-    // Modal
-    const cvModal = document.getElementById('cvModal');
-    document.getElementById('openCv').addEventListener('click', ()=>{
-      if(typeof cvModal.showModal === 'function') cvModal.showModal(); else alert('Your browser does not support <dialog> — use print to PDF');
-    });
-    document.getElementById('closeModal').addEventListener('click', ()=>cvModal.close());
-
-    // Download JSON resume (simple example)
-    const resume = {
-      name: 'Your Name', role:'Senior Frontend Engineer', email:'you@domain.com', phone:'+91-9XXXXXXXXX', location:'City, Country', skills:['React','TypeScript','Accessibility','Performance']
-    };
-    document.getElementById('downloadJson').addEventListener('click', ()=>{
-      const blob = new Blob([JSON.stringify(resume,null,2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'resume.json'; a.click(); URL.revokeObjectURL(url);
-    });
-
-    // Download printable PDF using the browser print is best. For quick single-click, we use jsPDF to snapshot
-    document.getElementById('downloadPdf').addEventListener('click', async ()=>{
-      if(confirm('For best results use browser Print (Ctrl/⌘ + P). Click OK to auto-open print dialog.')){
-        window.print();
-        return;
-      }
-      try{
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({unit:'pt', format:'a4'});
-        doc.setFontSize(12);
-        doc.text('CV - ' + resume.name, 40, 40);
-        doc.text('Email: ' + resume.email, 40, 60);
-        doc.text('Skills: ' + resume.skills.join(', '), 40, 80);
-        doc.save('cv.pdf');
-      }catch(e){
-        alert('PDF generation failed — use browser Print (Ctrl/⌘ + P) for a full-fidelity PDF.');
-      }
-    });
-
-    // GSAP animations: logo, hero, avatar, timeline, skills
-    gsap.from('.logo', {y:-12, opacity:0, duration:0.8, ease:'power2.out'});
-    gsap.from('.hero .meta h2', {x:-24, opacity:0, delay:0.15, duration:0.8, ease:'power3.out'});
-    gsap.from('.pills .pill', {y:8, opacity:0, delay:0.25, stagger:0.08, ease:'back.out(1.2)'});
-
-    // avatar float and subtle tilt on mouse
-    gsap.to('.avatar', {y:-6, duration:4, repeat:-1, yoyo:true, ease:'sine.inOut'});
-    document.querySelector('.avatar').addEventListener('mousemove', e=>{
-      const r = e.target.getBoundingClientRect();
-      const cx = (e.clientX - r.left) - r.width/2; const cy = (e.clientY - r.top) - r.height/2;
-      gsap.to('.avatar img', {rotationX: (-cy/20), rotationY:(cx/20), transformPerspective:400, duration:0.6, ease:'power2.out'});
-    });
-    document.querySelector('.avatar').addEventListener('mouseleave', ()=>{ gsap.to('.avatar img', {rotationX:0, rotationY:0, duration:0.6, ease:'power2.out'}); });
-
-    // reveal timeline entries one by one when scrolled into view using ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.utils.toArray('.entry').forEach((el, i)=>{
-      gsap.to(el, {opacity:1, y:0, duration:0.7, delay:i*0.12, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 85%'}});
-    });
-
-    // animate skill bars when skills container enters viewport
-    ScrollTrigger.create({
-      trigger: '#skills', start: 'top 85%', onEnter: ()=>{
-        document.querySelectorAll('#skills .bar > i').forEach((bar,idx)=>{
-          const w = bar.getAttribute('data-fill') || '70%';
-          setTimeout(()=>{ bar.style.width = w; }, idx*120);
-        });
-      }
-    });
-
-    // typing-like headline effect (gentler)
-    (function headline(){
-      const el = document.getElementById('headline');
-      const texts = ['I build delightful web experiences.','I design interfaces with accessibility in mind.','I optimise for performance and scale.'];
-      let t=0, char=0;
-      function tick(){
-        const full = texts[t];
-        char++;
-        el.childNodes[2] && (el.childNodes[2].textContent = ' ' + full.slice(0,char));
-        if(char >= full.length){ setTimeout(()=>{ char=0; t=(t+1)%texts.length; tick(); }, 1000); return; }
-        setTimeout(tick, 60);
-      }
-      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.appendChild(document.createTextNode(' ')); el.appendChild(document.createTextNode('')); tick(); }
-    })();
-
-    // Accessibility helpers: focus outline for keyboard users
-    (function focusOutline(){
-      function handleFirstTab(e){ if(e.key === 'Tab'){ document.body.classList.add('show-focus'); window.removeEventListener('keydown', handleFirstTab); }}
-      window.addEventListener('keydown', handleFirstTab);
-    })();
-
-    // small helper: staggered entrance for cards
-    gsap.from('.card', {y:18, opacity:0, duration:0.8, stagger:0.06, ease:'power3.out'});
-
-  </script>
 </body>
 </html>
