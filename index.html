@@ -5,96 +5,87 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Your Name — Personal Website & CV</title>
 
-  <!-- Google Fonts -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- AOS for scroll animations -->
+  <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-  <!-- Font Awesome (FIXED – CDN, WORKS) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 
-  <!-- Meta for theme-color on mobile -->
   <meta name="theme-color" content="#eaf6ff" />
 
   <style>
     :root{
-      --bg:#eaf6ff;        /* light blue */
-      --yellow:#fff6cc;   /* soft yellow */
+      --bg:#eaf6ff;
       --card:#ffffff;
+      --text:#072034;
       --muted:#50667a;
       --accent:#2563eb;
       --accent-2:#06b6d4;
-      --glass:rgba(37,99,235,0.04);
-      --glass-2:rgba(2,6,23,0.03);
-      --text:#072034;
-      --mono:'Inter',system-ui;
+      --font:'Inter',system-ui;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
-
     body{
       margin:0;
-      font-family:var(--mono);
+      font-family:var(--font);
+      background:radial-gradient(circle at 10% 10%, rgba(37,99,235,.08), transparent 30%),
+                 linear-gradient(180deg,var(--bg),#fff);
       color:var(--text);
-      background:
-        radial-gradient(circle at top left, var(--yellow), transparent 40%),
-        radial-gradient(circle at bottom right, rgba(37,99,235,.12), transparent 45%),
-        linear-gradient(180deg,var(--bg),#ffffff 60%);
-      line-height:1.45;
       overflow-x:hidden;
     }
 
+    /* Background blobs */
     .bg-blob{
       position:fixed;
-      right:-120px;
-      top:-80px;
-      width:360px;
-      height:360px;
-      border-radius:50%;
+      width:340px;height:340px;
       background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      filter:blur(48px);
+      filter:blur(50px);
       opacity:.12;
+      border-radius:50%;
+      top:-80px;right:-120px;
+      animation:float 20s ease-in-out infinite alternate;
       pointer-events:none;
-      animation:blobMove 18s ease-in-out infinite alternate;
     }
-    .bg-blob--small{
-      left:-80px;
-      bottom:-60px;
-      width:260px;
-      height:260px;
-      animation-duration:22s;
-      opacity:.08;
+    .bg-blob.small{
+      width:260px;height:260px;
+      left:-80px;bottom:-60px;
+      animation-duration:26s;
     }
-    @keyframes blobMove{
-      to{transform:translateY(36px) translateX(-18px) scale(1.08)}
-    }
+    @keyframes float{to{transform:translate(30px,30px) scale(1.1)}}
 
     .container{max-width:1100px;margin:32px auto;padding:24px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:16px}
 
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:56px;height:56px;border-radius:12px;
-      display:grid;place-items:center;
-      background:linear-gradient(135deg,var(--accent),#3b82f6);
-      box-shadow:0 10px 30px rgba(37,99,235,.2)
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
     }
 
-    h1{margin:0;font-size:1.12rem;font-weight:800}
-    p.lead{margin:0;color:var(--muted)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:56px;height:56px;
+      border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),#3b82f6);
+      color:#fff;font-weight:800;
+      box-shadow:0 12px 30px rgba(37,99,235,.2);
+    }
+
+    h1{margin:0;font-size:1.1rem}
+    .lead{margin:0;color:var(--muted)}
 
     .btn{
-      background:transparent;
       border:1px solid rgba(0,0,0,.08);
+      background:#fff;
       padding:10px 14px;
       border-radius:10px;
       cursor:pointer;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
     }
+    .btn:hover{transform:translateY(-3px)}
 
     main{
       display:grid;
@@ -105,25 +96,26 @@
 
     .card{
       background:var(--card);
-      border-radius:16px;
+      border-radius:18px;
       padding:22px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);
-      border:1px solid rgba(0,0,0,.05);
+      box-shadow:0 16px 40px rgba(0,0,0,.06);
+      border:1px solid rgba(0,0,0,.04);
     }
 
     .hero{display:flex;gap:20px;align-items:center}
     .avatar{
-      width:128px;height:128px;border-radius:16px;
+      width:120px;height:120px;
+      border-radius:16px;
       overflow:hidden;
-      box-shadow:0 8px 26px rgba(37,99,235,.25);
+      box-shadow:0 12px 30px rgba(37,99,235,.2);
     }
     .avatar img{width:100%;height:100%;object-fit:cover}
 
-    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .pill{
-      padding:8px 10px;
-      border-radius:999px;
+      padding:8px 12px;
       background:rgba(37,99,235,.08);
+      border-radius:999px;
       font-size:.85rem;
       font-weight:600;
     }
@@ -131,28 +123,28 @@
     .section{margin-top:22px}
     .faint{opacity:.75}
 
-    .skills{display:flex;gap:10px;flex-wrap:wrap}
-    .skill{min-width:120px}
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .skill{width:160px}
     .bar{
-      height:10px;
+      height:10px;border-radius:999px;
       background:#e5e7eb;
-      border-radius:999px;
-      overflow:hidden;
-      margin-top:8px;
+      overflow:hidden;margin-top:6px;
     }
     .bar i{
-      display:block;
-      height:100%;
+      display:block;height:100%;
       width:0%;
       background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      transition:width .9s ease;
+      border-radius:999px;
+      transition:width .9s cubic-bezier(.2,.9,.25,1);
     }
 
-    aside{position:sticky;top:28px}
+    .entry{opacity:0;transform:translateY(16px)}
+
+    aside{position:sticky;top:24px}
 
     footer{
-      margin-top:32px;
       text-align:center;
+      margin-top:32px;
       color:var(--muted);
     }
 
@@ -162,11 +154,10 @@
     }
   </style>
 </head>
-
 <body>
 
 <div class="bg-blob"></div>
-<div class="bg-blob bg-blob--small"></div>
+<div class="bg-blob small"></div>
 
 <div class="container">
 
@@ -175,10 +166,10 @@
     <div class="logo">YN</div>
     <div>
       <h1>Your Name</h1>
-      <p class="lead">Product Designer · Front-end Engineer</p>
+      <p class="lead">Frontend Engineer · Designer</p>
     </div>
   </div>
-  <button class="btn"><i class="fa fa-file-pdf"></i> Download CV</button>
+  <button class="btn" id="toggleTheme">Light / Dark</button>
 </header>
 
 <main>
@@ -186,11 +177,14 @@
   <div class="card" data-aos="fade-up">
     <div class="hero">
       <div class="avatar">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop">
       </div>
       <div>
-        <h2>Hi, I'm Your Name — <span id="dynamicText"></span></h2>
-        <p class="faint">I build delightful, accessible web experiences.</p>
+        <h2>
+          Hi, I’m <strong>Your Name</strong> —
+          <span id="dynamicText"></span>
+        </h2>
+        <p class="faint">I build modern, animated, accessible web experiences.</p>
 
         <div class="pills">
           <span class="pill">Available</span>
@@ -203,53 +197,65 @@
     <div class="section">
       <h3>Skills</h3>
       <div class="skills" id="skills">
-        <div class="skill">React<div class="bar"><i data-fill="85%"></i></div></div>
-        <div class="skill">TypeScript<div class="bar"><i data-fill="80%"></i></div></div>
-        <div class="skill">CSS<div class="bar"><i data-fill="75%"></i></div></div>
+        <div class="skill">
+          React
+          <div class="bar"><i data-fill="85%"></i></div>
+        </div>
+        <div class="skill">
+          JavaScript
+          <div class="bar"><i data-fill="90%"></i></div>
+        </div>
+        <div class="skill">
+          CSS / Animations
+          <div class="bar"><i data-fill="80%"></i></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <aside>
-  <div class="card">
+  <div class="card" data-aos="fade-left">
     <h3>Contact</h3>
-    <p><i class="fa fa-envelope"></i> you@domain.com</p>
-    <p><i class="fa fa-linkedin"></i> LinkedIn</p>
-    <p><i class="fa fa-github"></i> GitHub</p>
+    <p class="faint">you@email.com</p>
+    <p class="faint">linkedin.com/in/yourname</p>
+    <p class="faint">github.com/yourname</p>
   </div>
 </aside>
 </main>
 
 <footer>© <span id="year"></span> Your Name</footer>
-
 </div>
 
+<!-- Scripts -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <script>
-AOS.init();
+AOS.init({duration:800,once:true});
 document.getElementById('year').textContent=new Date().getFullYear();
 
-const texts=[
-  'Frontend Engineer.',
-  'UI / UX Designer.',
-  'Performance Focused.'
-];
-let t=0,i=0,dir=1;
-const el=document.getElementById('dynamicText');
+// typing animation (SAFE)
+(function(){
+  const el=document.getElementById('dynamicText');
+  const texts=[
+    'Frontend Engineer.',
+    'UI / UX Designer.',
+    'Performance Focused.'
+  ];
+  let t=0,i=0,dir=1;
+  function tick(){
+    el.textContent=texts[t].slice(0,i);
+    i+=dir;
+    if(i>texts[t].length){dir=-1;setTimeout(tick,1200);return;}
+    if(i<0){dir=1;t=(t+1)%texts.length;}
+    setTimeout(tick,dir>0?70:40);
+  }
+  tick();
+})();
 
-function type(){
-  el.textContent=texts[t].slice(0,i);
-  i+=dir;
-  if(i>texts[t].length){dir=-1;setTimeout(type,1000);return;}
-  if(i<0){dir=1;t=(t+1)%texts.length;}
-  setTimeout(type,dir>0?70:40);
-}
-type();
-
+// skill bars
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.create({
   trigger:'#skills',
