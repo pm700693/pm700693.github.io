@@ -4,37 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Prashant Mishra — Resume</title>
-  <meta name="description" content="Animated resume / CV — modern, responsive, single-file HTML suitable for GitHub Pages." />
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #fff4ec;  /* light orange background */
+      --bg: #fff4ec;
       --card: linear-gradient(135deg,#ffe3cf 0%, #ffd1b3 100%);
-      --accent1: #ffb703;  /* warm orange */
-      --accent2: #fb8500;  /* deeper orange */
-      --glass: rgba(0,0,0,0.04);
+      --accent1: #ffb703;
+      --accent2: #fb8500;
+      --glass: rgba(0,0,0,0.05);
+      --glass-2: rgba(0,0,0,0.04);
       --muted: rgba(0,0,0,0.6);
-      --glass-2: rgba(255,255,255,0.03);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
     body{
       margin:0;
       background:
         radial-gradient(1200px 600px at 10% 10%, rgba(251,133,0,0.15), transparent 40%),
         radial-gradient(1000px 500px at 90% 90%, rgba(255,183,3,0.12), transparent 40%),
         var(--bg);
-  color:#3b2f2f;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      color:#3b2f2f;
       padding:40px 24px;
       display:flex;
-      align-items:flex-start;
       justify-content:center;
     }
 
@@ -42,291 +39,232 @@
       width:100%;
       max-width:1100px;
       display:grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns:320px 1fr;
       gap:28px;
     }
 
-    /* Left column */
     .panel{
       background:var(--card);
       border-radius:16px;
       padding:22px;
-      box-shadow:0 6px 30px rgba(2,6,23,0.6);
-      position:relative;
-      overflow:hidden;
+      box-shadow:0 6px 24px rgba(251,133,0,0.25);
     }
 
     .photo{
-      width:100%;
       height:320px;
       border-radius:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      overflow:hidden;
       margin-bottom:18px;
-      position:relative;
     }
-    .photo img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
 
     h1{font-size:22px;margin:6px 0 2px}
     h2{font-size:14px;margin:0;color:var(--muted);font-weight:600}
 
-    .contact{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6}
-    .contact a{color:inherit;text-decoration:none}
+    .contact{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+    }
 
     .skills{margin-top:18px}
     .skill{margin-bottom:12px}
-    .skill .label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
-    .bar{height:10px;background:var(--glass);border-radius:999px;overflow:hidden}
-    .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));transform-origin:left;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
 
-    /* Right column */
-    .content{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;padding:26px;box-shadow:0 6px 30px rgba(2,6,23,0.45);
+    .label{
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:6px;
     }
 
-    .section{margin-bottom:20px;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-    .section.visible{opacity:1;transform:none}
+    .bar{
+      height:10px;
+      background:var(--glass);
+      border-radius:999px;
+      overflow:hidden;
+    }
 
-    .summary{font-size:15px;color:#3b2f2f;line-height:1.6}
+    .bar i{
+      display:block;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    }
 
-    .timeline{border-left:2px solid rgba(255,255,255,0.04);padding-left:18px;margin-top:12px}
-    .item{position:relative;padding:12px 0}
-    .item:before{content:'';position:absolute;left:-11px;top:14px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 0 10px rgba(96,165,250,0.12)}
+    .btn{
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:#4a2c00;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+    }
+
+    .btn.outline{
+      background:transparent;
+      border:1px solid rgba(0,0,0,0.2);
+      color:#5a3a00;
+    }
+
+    footer{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .content{
+      background:#fff;
+      border-radius:16px;
+      padding:26px;
+      box-shadow:0 6px 24px rgba(251,133,0,0.2);
+    }
+
+    .section{margin-bottom:20px}
+
+    .summary{
+      font-size:15px;
+      line-height:1.6;
+      color:#3b2f2f;
+    }
+
+    .timeline{
+      border-left:2px solid rgba(251,133,0,0.3);
+      padding-left:18px;
+      margin-top:12px;
+    }
+
+    .item{
+      position:relative;
+      padding:12px 0;
+    }
+
+    .item::before{
+      content:'';
+      position:absolute;
+      left:-11px;
+      top:16px;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    }
+
     .item h3{margin:0;font-size:15px}
-    .item .meta{font-size:13px;color:var(--muted);margin-top:4px}
 
-    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:12px}
-    .card{background:var(--glass-2);padding:14px;border-radius:12px;backdrop-filter:blur(6px);transition:transform .25s ease, box-shadow .25s ease}
-    .card:hover{transform:translateY(-6px);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
-    .card h4{margin:0 0 8px}
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .card{
+      background:#fff7f0;
+      padding:14px;
+      border-radius:12px;
+      box-shadow:0 4px 14px rgba(251,133,0,0.2);
+    }
+
+    .card h4{margin:0 0 6px}
     .card p{margin:0;font-size:13px;color:var(--muted)}
 
-    .actions{display:flex;gap:10px;margin-top:18px}
-    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#04202b;font-weight:600;border:none;cursor:pointer}
-    .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-
-    footer{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
-
-    /* Responsive */
     @media (max-width:880px){
-      .wrap{grid-template-columns:1fr;}
+      .wrap{grid-template-columns:1fr}
       .photo{height:260px}
-    }
-
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .bar > i{transition:none}
-      .section{transition:none}
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
+
     <aside class="panel">
-      <div class="photo" aria-hidden="true">
-        <!-- Replace with your photo or avatar -->
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcd" alt="Profile photo">
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800" alt="Profile">
       </div>
 
       <h1>Prashant Mishra</h1>
       <h2>Senior Software Engineer — Frontend • UI/UX</h2>
 
       <div class="contact">
-        <div><strong>Email:</strong> <a href="#" id="email">prashant.k.mishra1@aexp.com</a></div>
+        <div><strong>Email:</strong> prashant@example.com</div>
         <div><strong>Location:</strong> Mumbai, India</div>
-        <div><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/prashant-mishra</a></div>
+        <div><strong>LinkedIn:</strong> linkedin.com/in/prashant-mishra</div>
       </div>
 
       <div class="skills">
-        <h3 style="margin:12px 0 10px">Skills</h3>
+        <h3>Skills</h3>
+
         <div class="skill">
-          <div class="label"><span>HTML &amp; CSS</span><span>95%</span></div>
+          <div class="label"><span>HTML & CSS</span><span>95%</span></div>
           <div class="bar"><i style="width:95%"></i></div>
         </div>
+
         <div class="skill">
           <div class="label"><span>JavaScript / TypeScript</span><span>90%</span></div>
           <div class="bar"><i style="width:90%"></i></div>
         </div>
+
         <div class="skill">
           <div class="label"><span>React / Next.js</span><span>88%</span></div>
           <div class="bar"><i style="width:88%"></i></div>
         </div>
-        <div class="skill">
-          <div class="label"><span>Design Systems</span><span>82%</span></div>
-          <div class="bar"><i style="width:82%"></i></div>
-        </div>
       </div>
 
-      <div style="margin-top:18px;display:flex;gap:8px;">
-        <button class="btn" id="download">Download PDF</button>
-        <button class="btn outline" id="copyEmail">Copy Email</button>
+      <div style="margin-top:16px;display:flex;gap:8px">
+        <button class="btn">Download PDF</button>
+        <button class="btn outline">Copy Email</button>
       </div>
 
-      <footer style="margin-top:12px">Built with ❤️ • Single-file resume for GitHub Pages</footer>
+      <footer>Built with ❤️ • Light Orange Theme</footer>
     </aside>
 
     <main class="content">
-      <section class="section" id="summary">
-        <h3 style="margin-top:0">Summary</h3>
-        <!-- Animated summary: typing effect with reduced-motion fallback -->
-        <p class="summary" aria-live="polite">
-          <span id="summaryText" data-text="Product-focused frontend engineer with 10+ years building performant, accessible, and delightful web experiences. I lead component design, optimize front-end performance, and collaborate closely with cross-functional teams to ship production-grade features.">Product-focused frontend engineer with 10+ years building performant, accessible, and delightful web experiences. I lead component design, optimize front-end performance, and collaborate closely with cross-functional teams to ship production-grade features.</span>
-          <noscript> (Enable JavaScript to see the animated summary.)</noscript>
+      <section class="section">
+        <h3>Summary</h3>
+        <p class="summary">
+          Product-focused frontend engineer with 10+ years building performant,
+          accessible, and delightful web experiences.
         </p>
       </section>
 
-      <section class="section" id="experience">
+      <section class="section">
         <h3>Experience</h3>
         <div class="timeline">
           <div class="item">
             <h3>Senior Software Engineer — American Express</h3>
-            <div class="meta">2020 — Present • Mumbai, India</div>
-            <p style="margin-top:8px;font-size:14px;color:var(--muted)">Led frontend architecture for payments UI, introduced component library used across 8 teams, reduced bundle size by 28% and improved Lighthouse performance scores.</p>
+            <div class="meta">2020 — Present • Mumbai</div>
           </div>
-
           <div class="item">
             <h3>Frontend Engineer — FinTech Startup</h3>
             <div class="meta">2016 — 2020 • Remote</div>
-            <p style="margin-top:8px;font-size:14px;color:var(--muted)">Built customer-facing web app and onboarding flows, implemented analytics and A/B experimentation hooks.</p>
           </div>
         </div>
       </section>
 
-      <section class="section" id="projects">
+      <section class="section">
         <h3>Projects</h3>
         <div class="projects">
-          <article class="card">
-            <h4>Design System (open-source)</h4>
-            <p>Shared component library with tokens, docs, and playground — used by internal teams to speed up delivery.</p>
-          </article>
-
-          <article class="card">
-            <h4>Payment Flow Rework</h4>
-            <p>Performance-first rewrite of the checkout flow. Achieved a 40% faster first input delay and higher conversion.</p>
-          </article>
-
-          <article class="card">
-            <h4>Accessibility Audit</h4>
-            <p>Led audit and remediation for WCAG 2.1 AA across key product pages.</p>
-          </article>
+          <div class="card">
+            <h4>Design System</h4>
+            <p>Reusable UI components and tokens.</p>
+          </div>
+          <div class="card">
+            <h4>Payment Flow</h4>
+            <p>High-performance checkout rewrite.</p>
+          </div>
         </div>
       </section>
-
-      <section class="section" id="education">
-        <h3>Education</h3>
-        <p class="meta" style="margin-top:6px;color:var(--muted)">B.Tech — Computer Science, XYZ University (2010 — 2014)</p>
-      </section>
-
-      <section class="section" id="contactActions" style="margin-top:6px">
-        <div class="actions">
-          <a class="btn" href="#contact" onclick="document.getElementById('email').scrollIntoView({behavior:'smooth'})">Contact</a>
-          <a class="btn outline" href="#projects">See Projects</a>
-        </div>
-      </section>
-
     </main>
+
   </div>
-
-  <script>
-    // Simple intersection observer to reveal sections
-    (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced) return document.querySelectorAll('.section').forEach(s=>s.classList.add('visible'));
-
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('visible');
-            // If this is the summary section, trigger the typewriter
-            if(e.target.id === 'summary') startTypewriter();
-            obs.unobserve(e.target);
-          }
-        });
-      },{threshold:0.12});
-
-      document.querySelectorAll('.section').forEach(s=>obs.observe(s));
-    })();
-
-    // Animate skill bars for users with JS enabled (progressive enhancement)
-    (function(){
-      const bars = document.querySelectorAll('.bar > i');
-      bars.forEach(b=>{
-        const w = b.style.width || '0%';
-        b.style.width = '0%';
-        requestAnimationFrame(()=>{
-          setTimeout(()=> b.style.width = w, 120);
-        });
-      });
-    })();
-
-    // Typewriter animation for the summary
-    function startTypewriter(){
-      const el = document.getElementById('summaryText');
-      if(!el) return;
-      const full = el.getAttribute('data-text') || el.textContent.trim();
-      // If already typed (e.g., user navigated back), don't re-run
-      if(el.dataset.typed === '1') return;
-      // Respect prefers-reduced-motion
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced){ el.textContent = full; el.dataset.typed = '1'; return; }
-
-      el.textContent = '';
-      el.style.whiteSpace = 'pre-wrap';
-      el.setAttribute('aria-hidden','false');
-      const cursor = document.createElement('span');
-      cursor.setAttribute('aria-hidden','true');
-      cursor.className = 'tw-caret';
-      cursor.textContent = '▊';
-      el.parentNode.appendChild(cursor);
-
-      let idx = 0;
-      const speed = 18 + Math.floor(Math.random()*14); // 18-32ms per char
-      function step(){
-        if(idx <= full.length){
-          el.textContent = full.slice(0, idx);
-          idx++;
-          setTimeout(step, speed + (Math.random()*30));
-        } else {
-          // done
-          cursor.remove();
-          el.dataset.typed = '1';
-        }
-      }
-      step();
-    }
-
-    // Download PDF placeholder — replace with your hosted PDF file or use print() to print to PDF
-    document.getElementById('download').addEventListener('click', ()=>{
-      const pdfUrl = './resume.pdf';
-      fetch(pdfUrl, {method:'HEAD'}).then(r=>{
-        if(r.ok) window.location.href = pdfUrl;
-        else window.print();
-      }).catch(()=> window.print());
-    });
-
-    // Copy email
-    document.getElementById('copyEmail').addEventListener('click', async ()=>{
-      const email = document.getElementById('email').textContent.trim();
-      try{
-        await navigator.clipboard.writeText(email);
-        const old = document.getElementById('copyEmail').textContent;
-        document.getElementById('copyEmail').textContent = 'Copied!';
-        setTimeout(()=> document.getElementById('copyEmail').textContent = old,1200);
-      }catch(e){
-        alert('Could not copy. Email: ' + email);
-      }
-    });
-
-    // Accessibility: focus outlines for keyboard users
-    (function(){
-      function handleFirstTab(e) {
-        if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
-      }
-      window.addEventListener('keydown', handleFirstTab, {once:true});
-    })();
-  </script>
 </body>
 </html>
