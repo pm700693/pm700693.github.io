@@ -130,36 +130,64 @@
       .section{transition:none}
     }
       @media print {
-
   /* Page setup */
-  @page {
-    size: A4;
-    margin: 12mm;
-  }
+  @page { size: A4; margin: 12mm; }
 
   body {
     padding: 0;
     background: white !important;
+    color: #000 !important;
   }
 
-  /* Allow full image display */
+  /* Make sure panels and containers do not clip the image */
+  .panel, .photo, .wrap, .content {
+    overflow: visible !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Let the photo take natural height and scale to page nicely */
   .photo {
-    height: auto !important;   /* REMOVE fixed height */
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    box-shadow: none !important; /* remove heavy shadows for print */
+    margin: 0 0 12px 0 !important;
+    page-break-after: avoid; /* use "always" if you want the photo on its own page */
   }
 
+  /* Ensure the <img> fills width but preserves aspect, and won't be cropped */
   .photo img {
-    width: 100% !important;
-    height: auto !important;   /* Maintain aspect ratio */
-    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+    width: auto !important;           /* prefer natural width to avoid distortion */
+    max-width: 100% !important;       /* but don't exceed column width */
+    height: auto !important;          /* preserve aspect ratio */
+    max-height: calc(297mm - 24mm) !important; /* A4 height minus page margins */
+    object-fit: contain !important;   /* keeps whole image visible */
   }
 
-  /* Prevent cutting cards across pages */
-  .panel,
-  .content,
-  .item {
-    page-break-inside: avoid;
-    break-inside: avoid;
+  /* If the image still gets cut by other content, force the photo to a full page */
+  /* Uncomment the two rules below to put the photo on its own print page */
+  /*
+  .photo {
+    page-break-before: always !important;
+    page-break-after: always !important;
   }
+  */
+
+  /* Make content more print-friendly */
+  .panel, .content, .item {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+
+  /* Avoid splitting timeline items */
+  .item { page-break-inside: avoid; }
+
+  /* Optional: keep header/footer small in print */
+  h1, h2, h3 { color: #000 !important; }
 }
 
   </style>
@@ -240,7 +268,10 @@ Composer), Aws &amp; CSS</span><span>95%</span></div>
 
       </div>
 
-      
+      <div style="margin-top:18px;display:flex;gap:8px;">
+        <button class="btn" id="download">Download PDF</button>
+        <button class="btn outline" id="copyEmail">Copy Email</button>
+      </div>
 
       <footer style="margin-top:12px">Contact - +91-9728514902</footer>
     </aside>
