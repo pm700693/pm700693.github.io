@@ -92,10 +92,18 @@
 
     .summary{font-size:15px;color:#3b2f2f;line-height:1.6}
 
-    .timeline{border-left:2px solid rgba(255,255,255,0.04);padding-left:18px;margin-top:12px}
+    .timeline{
+      border-left:2px solid rgba(255,255,255,0.04);
+      padding-left:22px; /* adjust this to move entire content right/left */
+      margin-top:12px;
+    }
     .item{position:relative;padding:12px 0}
     .item:before{content:'';position:absolute;left:-11px;top:14px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 0 10px rgba(96,165,250,0.12)}
-    .item h3{margin:0;font-size:15px}
+    .item h3{
+  margin:0;
+  font-size:15px;
+  padding-left:18px; /* GAP after the dot; tweak this value to taste */
+}
     .item .meta{font-size:13px;color:var(--muted);margin-top:4px}
 
     .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:12px}
@@ -220,7 +228,6 @@ Composer), Aws &amp; CSS</span><span>95%</span></div>
       <section class="section" id="experience">
         <h3>Experience</h3>
         <div class="timeline">
-            <br><br>
           <div class="item">
             <h3> Software Engineer II — American Express</h3>
             <div class="meta">June 2024 — Present • Gurugram, India</div>
