@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,10 +12,10 @@
 
   <style>
     :root{
-      --bg: #fff4ec;  /* light orange background */
+      --bg: #F5F5F5;  /* light orange background */
       --card: linear-gradient(135deg,#ffe3cf 0%, #ffd1b3 100%);
-      --accent1: #ffb703;  /* warm orange */
-      --accent2: #fb8500;  /* deeper orange */
+      --accent1: #F59B0A;  /* warm orange */
+      --accent2: #F59B0A;  /* deeper orange */
       --glass: rgba(0,0,0,0.04);
       --muted: rgba(0,0,0,0.6);
       --glass-2: rgba(255,255,255,0.03);
@@ -26,10 +27,10 @@
     body{
       margin:0;
       background:
-        radial-gradient(1200px 600px at 10% 10%, rgba(251,133,0,0.15), transparent 40%),
-        radial-gradient(1000px 500px at 90% 90%, rgba(255,183,3,0.12), transparent 40%),
+        radial-gradient(1200px 600px at 10% 10%, rgba(251,133,0,0.15), transparent 90%),
+        radial-gradient(1000px 500px at 90% 90%, rgba(255,183,3,0.12), transparent 90%),
         var(--bg);
-  color:#3b2f2f;
+  color:#404CF7;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       padding:40px 24px;
@@ -189,7 +190,95 @@
   /* Optional: keep header/footer small in print */
   h1, h2, h3 { color: #000 !important; }
 }
+/* 🔹 MESSAGE UI (ADDED) */
+    .message-box{
+      margin-top:18px;
+    }
 
+    .message-box textarea{
+      width:100%;
+      min-height:70px;
+      resize:none;
+      border-radius:10px;
+      padding:10px;
+      font-family:inherit;
+      font-size:13px;
+      border:1px solid rgba(0,0,0,.2);
+      margin-bottom:10px;
+    }
+
+    .message-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      flex:1;
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      border:none;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn.outline{
+      background:transparent;
+      border:1px solid rgba(0,0,0,.25);
+    }
+
+    .btn:hover{opacity:.9}
+
+    footer{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .content{
+      background:white;
+      border-radius:16px;
+      padding:26px;
+      box-shadow:0 6px 30px rgba(2,6,23,.45);
+    }
+
+    .timeline{
+      border-left:2px solid rgba(0,0,0,.1);
+      padding-left:22px;
+    }
+
+    .item{
+      position:relative;
+      padding:12px 0;
+    }
+
+    .item:before{
+      content:'';
+      position:absolute;
+      left:-11px;
+      top:16px;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--glass-2);
+      padding:14px;
+      border-radius:12px;
+    }
+
+    @media(max-width:880px){
+      .wrap{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
@@ -267,9 +356,18 @@ Composer), Aws &amp; CSS</span><span>95%</span></div>
         </div>
 
       </div>
-        
+        <!-- ✅ CUSTOM MESSAGE (ADDED) -->
+    <div class="message-box">
+      <textarea id="customMessage" placeholder="Type your message here..."></textarea>
+      <div class="message-actions">
+        <button class="btn outline" id="smsBtn">Send SMS</button>
+        <button class="btn" id="whatsappBtn">WhatsApp</button>
+      </div>
+    </div>
 
-      <footer style="margin-top:12px">Contact - +91-9728514902</footer>
+    <footer>Contact via SMS or WhatsApp</footer>
+
+      <footer style="margin-top:12px">+91-9728514902</footer>
     </aside>
 
     <main class="content">
@@ -368,6 +466,24 @@ environment by working closely with the stakeholders & solution architect.
   </div>
 
   <script>
+
+      const phoneNumber = '919728514902';
+
+  function getMessage() {
+    const text = document.getElementById('customMessage').value.trim();
+    return encodeURIComponent(
+      text || 'Hi Prashant, I viewed your resume and would like to connect.'
+    );
+  }
+
+  document.getElementById('smsBtn').addEventListener('click', () => {
+    window.location.href = `sms:${phoneNumber}?body=${getMessage()}`;
+  });
+
+  document.getElementById('whatsappBtn').addEventListener('click', () => {
+    window.open(`https://wa.me/${phoneNumber}?text=${getMessage()}`, '_blank');
+  });
+
     // Simple intersection observer to reveal sections
     (function(){
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -457,6 +573,18 @@ environment by working closely with the stakeholders & solution architect.
       }
       window.addEventListener('keydown', handleFirstTab, {once:true});
     })();
+
+
+
+
   </script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("YOUR_PUBLIC_KEY"); // <-- replace
+  })();
+</script>
+
+
 </body>
 </html>
