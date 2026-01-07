@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>EmailJS Access Gate – Sample</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("4_CqucsGov_ltiTmx"); // 🔁 replace
+    })();
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, Arial;
+    }
+
+    /* ACCESS GATE */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .gate-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .gate-card input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .gate-card button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #fb8500;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      padding: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 🔒 ACCESS GATE -->
+<div id="accessGate" class="gate">
+  <div class="gate-card">
+    <h3>Access Required</h3>
+    <p>Please enter your details to continue</p>
+
+    <input id="visitorName" placeholder="Your name" />
+    <input id="visitorEmail" placeholder="Your email" type="email" />
+
+    <button id="requestAccess">Request Access</button>
+  </div>
+</div>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="content">
+  <h1>Protected Resume Content</h1>
+  <p>
+    This content becomes visible only after submitting
+    name and email (soft gate).
+  </p>
+</div>
+
+<script>
+  const gate = document.getElementById("accessGate");
+
+  // If already approved on this device, skip gate
+  if (localStorage.getItem("resume_access") === "yes") {
+    gate.style.display = "none";
+  }
+
+  document.getElementById("requestAccess").addEventListener("click", () => {
+    const name = document.getElementById("visitorName").value.trim();
+    const email = document.getElementById("visitorEmail").value.trim();
+
+    if (!name || !email) {
+      alert("Name and email are required");
+      return;
+    }
+
+    // 📧 SEND EMAIL VIA EMAILJS
+    emailjs.send(
+      "service_wcdlozi",   // 🔁 replace
+      "template_eyb2jb1",  // 🔁 replace
+      {
+        name: name,
+        email: email
+      }
+    ).then(
+      () => {
+        // Remember access on this browser
+        localStorage.setItem("resume_access", "yes");
+
+        // Allow access
+        gate.style.display = "none";
+      },
+      (error) => {
+        alert("Failed to send email. Try again.");
+        console.error(error);
+      }
+    );
+  });
+</script>
+
+</body>
+</html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prashant Mishra — Resume</title>
+  <meta name="description" content="Animated resume / CV — modern, responsive, single-file HTML suitable for GitHub Pages." />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #F5F5F5;  /* light orange background */
+      --card: linear-gradient(135deg,#ffe3cf 0%, #ffd1b3 100%);
+      --accent1: #F59B0A;  /* warm orange */
+      --accent2: #F59B0A;  /* deeper orange */
+      --glass: rgba(0,0,0,0.04);
+      --muted: rgba(0,0,0,0.6);
+      --glass-2: rgba(255,255,255,0.03);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(251,133,0,0.15), transparent 90%),
+        radial-gradient(1000px 500px at 90% 90%, rgba(255,183,3,0.12), transparent 90%),
+        var(--bg);
+  color:#404CF7;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 24px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:28px;
+    }
+
+    /* Left column */
+    .panel{
+      background:var(--card);
+      border-radius:16px;
+      padding:22px;
+      box-shadow:0 6px 30px rgba(2,6,23,0.6);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .photo{
+      width:100%;
+      max-height:320px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:18px;
+      position:relative;
+    }
+    .photo img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+
+    h1{font-size:22px;margin:6px 0 2px}
+    h2{font-size:14px;margin:0;color:var(--muted);font-weight:600}
+
+    .contact{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6}
+    .contact a{color:inherit;text-decoration:none}
+
+    .skills{margin-top:18px}
+    .skill{margin-bottom:12px}
+    .skill .label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+    .bar{height:10px;background:var(--glass);border-radius:999px;overflow:hidden}
+    .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));transform-origin:left;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
+
+    /* Right column */
+    .content{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:26px;box-shadow:0 6px 30px rgba(2,6,23,0.45);
+    }
+
+    .section{margin-bottom:20px;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .section.visible{opacity:1;transform:none}
+
+    .summary{font-size:15px;color:#3b2f2f;line-height:1.6}
+
+    .timeline{
+      border-left:2px solid rgba(255,255,255,0.04);
+      padding-left:22px; /* adjust this to move entire content right/left */
+      margin-top:12px;
+    }
+    .item{position:relative;padding:12px 0}
+    .item:before{content:'';position:absolute;left:-11px;top:14px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 0 10px rgba(96,165,250,0.12)}
+    .item h3{
+  margin:0;
+  font-size:15px;
+  padding-left:18px; /* GAP after the dot; tweak this value to taste */
+}
+    .item .meta{font-size:13px;color:var(--muted);margin-top:4px}
+
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:12px}
+    .card{background:var(--glass-2);padding:14px;border-radius:12px;backdrop-filter:blur(6px);transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    .card h4{margin:0 0 8px}
+    .card p{margin:0;font-size:13px;color:var(--muted)}
+
+    .actions{display:flex;gap:10px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#04202b;font-weight:600;border:none;cursor:pointer}
+    .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    footer{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .wrap{grid-template-columns:1fr;}
+      .photo{height:260px}
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .bar > i{transition:none}
+      .section{transition:none}
+    }
+      @media print {
+  /* Page setup */
+  @page { size: A4; margin: 12mm; }
+
+  body {
+    padding: 0;
+    background: white !important;
+    color: #000 !important;
+  }
+
+  /* Make sure panels and containers do not clip the image */
+  .panel, .photo, .wrap, .content {
+    overflow: visible !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Let the photo take natural height and scale to page nicely */
+  .photo {
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    box-shadow: none !important; /* remove heavy shadows for print */
+    margin: 0 0 12px 0 !important;
+    page-break-after: avoid; /* use "always" if you want the photo on its own page */
+  }
+
+  /* Ensure the <img> fills width but preserves aspect, and won't be cropped */
+  .photo img {
+    display: block !important;
+    margin: 0 auto !important;
+    width: auto !important;           /* prefer natural width to avoid distortion */
+    max-width: 100% !important;       /* but don't exceed column width */
+    height: auto !important;          /* preserve aspect ratio */
+    max-height: calc(297mm - 24mm) !important; /* A4 height minus page margins */
+    object-fit: contain !important;   /* keeps whole image visible */
+  }
+
+  /* If the image still gets cut by other content, force the photo to a full page */
+  /* Uncomment the two rules below to put the photo on its own print page */
+  /*
+  .photo {
+    page-break-before: always !important;
+    page-break-after: always !important;
+  }
+  */
+
+  /* Make content more print-friendly */
+  .panel, .content, .item {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+
+  /* Avoid splitting timeline items */
+  .item { page-break-inside: avoid; }
+
+  /* Optional: keep header/footer small in print */
+  h1, h2, h3 { color: #000 !important; }
+}
+/* 🔹 MESSAGE UI (ADDED) */
+    .message-box{
+      margin-top:18px;
+    }
+
+    .message-box textarea{
+      width:100%;
+      min-height:70px;
+      resize:none;
+      border-radius:10px;
+      padding:10px;
+      font-family:inherit;
+      font-size:13px;
+      border:1px solid rgba(0,0,0,.2);
+      margin-bottom:10px;
+    }
+
+    .message-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      flex:1;
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      border:none;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn.outline{
+      background:transparent;
+      border:1px solid rgba(0,0,0,.25);
+    }
+
+    .btn:hover{opacity:.9}
+
+    footer{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .content{
+      background:white;
+      border-radius:16px;
+      padding:26px;
+      box-shadow:0 6px 30px rgba(2,6,23,.45);
+    }
+
+    .timeline{
+      border-left:2px solid rgba(0,0,0,.1);
+      padding-left:22px;
+    }
+
+    .item{
+      position:relative;
+      padding:12px 0;
+    }
+
+    .item:before{
+      content:'';
+      position:absolute;
+      left:-11px;
+      top:16px;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--glass-2);
+      padding:14px;
+      border-radius:12px;
+    }
+
+    @media(max-width:880px){
+      .wrap{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="panel">
+      <div class="photo" aria-hidden="true">
+        <!-- Replace with your photo or avatar -->
+        <img src="IMG_1066.png" alt="Profile photo">
+      </div>
+
+      <h1>Prashant Mishra</h1>
+      <h2>Software Engineer II</h2>
+
+      <div class="contact">
+        <div><strong>Email:</strong> <a href="#" id="email">pm700693@gmail.com</a></div>
+        <div><strong>Location:</strong> Gurugram, India</div>
+        <div><strong>LinkedIn:</strong> <a href="#" target="_blank">https://www.linkedin.com/in/pm700693/</a></div>
+      </div>
+
+      <div class="skills">
+        <h3 style="margin:12px 0 10px">Skills</h3>
+        <div class="skill">
+          <div class="label"><span>Google Cloud Platform (BigQuery, Dataflow, Dataproc, Cloud Storage, Pub/Sub,
+Composer), Aws &amp; CSS</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>JavaScript, Html / TypeScript</span><span>90%</span></div>
+          <div class="bar"><i style="width:98%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>Apache Spark / Next.js</span><span>88%</span></div>
+          <div class="bar"><i style="width:97%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>Kafka</span><span>82%</span></div>
+          <div class="bar"><i style="width:93%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Hadoop</span><span>82%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Airflow</span><span>82%</span></div>
+          <div class="bar"><i style="width:92%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Pyspark</span><span>82%</span></div>
+          <div class="bar"><i style="width:90%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Python</span><span>82%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+          </div>
+          <div class="skill">
+          <div class="label"><span>Java</span><span>82%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+
+          <div class="skill">
+          <div class="label"><span>Sql</span><span>82%</span></div>
+          <div class="bar"><i style="width:94%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Docker</span><span>82%</span></div>
+          <div class="bar"><i style="width:83%"></i></div>
+        </div>
+         <div class="skill">
+          <div class="label"><span>Git</span><span>82%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+         <div class="skill">
+          <div class="label"><span>Terraform</span><span>82%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+
+      </div>
+        <!-- ✅ CUSTOM MESSAGE (ADDED) -->
+    <div class="message-box">
+      <textarea id="customMessage" placeholder="Type your message here..."></textarea>
+      <div class="message-actions">
+        <button class="btn outline" id="smsBtn">Send SMS</button>
+        <button class="btn" id="whatsappBtn">WhatsApp</button>
+      </div>
+    </div>
+
+    <footer>Contact via SMS or WhatsApp</footer>
+
+      <footer style="margin-top:12px">+91-9728514902</footer>
+    </aside>
+
+    <main class="content">
+      <section class="section" id="summary">
+        <h3 style="margin-top:0">Summary</h3>
+        <!-- Animated summary: typing effect with reduced-motion fallback -->
+        <p class="summary" aria-live="polite">
+          <span id="summaryText" data-text="I have 5+ years of strong experience across Big Data, cloud, and backend systems, including IAM concepts (authentication vs authorization, privilege lifecycle, segregation of duties). My technical background includes Python, Java, SQL, Big Data technologies such as Spark, Kafka, Hadoop, and Airflow, Pyspark; cloud platforms including GCP (BigQuery, Dataflow, Dataproc, Cloud Storage, Pub/Sub, Composer) and AWS (Hive), SQL and NoSQL, databases (BigQuery, PostgreSQL, MySQL, Oracle, Couchbase); DevOps tools (Docker, Git, CI/CD, Terraform); and ETL/ELT, batch and streaming data processing, and data modeling."</span>
+          <noscript> (Enable JavaScript to see the animated summary.)</noscript>
+        </p>
+      </section>
+
+      <section class="section" id="experience">
+        <h3>Experience</h3>
+        <div class="timeline">
+          <div class="item">
+            <h3> Software Engineer II — American Express</h3>
+            <div class="meta">June 2024 — Present • Gurugram, India</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Designed and implemented scalable data pipelines on GCP using Dataflow, BigQuery,
+and Dataproc, processing 5+ TB of data per day
+- Built real-time streaming systems using Kafka and Pub/Sub, reducing end-to-end
+latency by 60%
+- Optimized BigQuery schemas and Couchbase queries, achieving 35% reduction in
+cloud costs
+- Developed Spark-based batch processing jobs supporting analytics and ML use cases
+- Implemented monitoring, alerting, and data quality checks, reducing pipeline failures
+by 40%
+- Collaborated with cross-functional teams across backend, analytics, and DevOps
+-Configure custom validation and anomaly detection rules.
+-Built and maintained backend microservices using Java 17 and Spring Boot, supporting:
+RuleBox (rule configuration and execution engine), Spike model (mode that checks spike
+in data and detect anomaly) orchestration and monitoring services.
+-Integrated Python ML services with Java Spring Boot APIs using REST and asynchronous
+messaging.</p>
+          </div>
+
+          <div class="item">
+            <h3>Systems Engineer — Tata Consultancy Services</h3>
+            <div class="meta">March 2023 — June 2024 • Noida</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Experienced in building data pipelines using and for ETL related jobs using respective
+operators using python.
+- Experienced in data analytics and in moving the data from AWS, on-premises oracle
+databases to GCP using connectors.
+- Designed and coordinated with Architects in implementing Advanced Analytical models
+over large datasets.
+- Expertise in handling large datasets using Partitions, Spark in Memory capabilities,
+efficient Joins, Transformations.
+- Designed and implemented a real-time data pipeline to process records from data sources
+using and Implemented frameworks that extract data(csv files) in GCS.</p>
+          </div>
+          <div class="item">
+            <h3>Associate Software Engineer — Mphasis</h3>
+            <div class="meta">Feb 2021 — Feb 2023 • Pune</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Implemented DynamoDB to securely store business insights and operations data
+increasing storage capability by 50% while reducing latency time by 250%.
+-Fixed and troubleshot java Code Issues and technical issues for designers and developers
+during the project lifecycle. JUNIT written with code coverage up to90%.
+-Used Jenkins for Continuous Integration and Development Involved in design and
+development phases of Agile Software Development Performed Continuous Integration
+and Continuous Development using Jenkins on Jules
+-Supported in Testing and bug-fixing. Worked on Sql Queries. Worked on Bitbucket, JIRA.
+Used Log4j framework to track application.
+-Responsible for such as cleaning, transformation and ensuring Integrity in a relational
+environment by working closely with the stakeholders & solution architect.
+-Designed and to provide to objects in AWS S3 using AWS Lambda, DynamoDB.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <h3>Projects</h3>
+        <div class="projects">
+          <article class="card">
+            <h4>Real-Time Analytics Platform (GCP)</h4>
+            <p>- Designed a streaming pipeline using Pub/Sub → Dataflow → BigQuery
+               - Processed 1M+ events/day with sub-second latency.</p>
+          </article>
+
+          <article class="card">
+            <h4>Cloud Data Warehouse Migration</h4>
+            <p>- Led migration from legacy SQL systems to BigQuery
+               - Improved reporting performance by 4× and reduced maintenance overhead</p>
+          </article>
+
+        </div>
+      </section>
+
+      <section class="section" id="education">
+        <h3>Education</h3>
+        <p class="meta" style="margin-top:6px;color:var(--muted)">B.Tech — Computer Science, Chandigarh Engineering College (2016 — 2020)</p>
+      </section>
+
+
+
+    </main>
+  </div>
+
+  <script>
+
+      const phoneNumber = '919728514902';
+
+  function getMessage() {
+    const text = document.getElementById('customMessage').value.trim();
+    return encodeURIComponent(
+      text || 'Hi Prashant, I viewed your resume and would like to connect.'
+    );
+  }
+
+  document.getElementById('smsBtn').addEventListener('click', () => {
+    window.location.href = `sms:${phoneNumber}?body=${getMessage()}`;
+  });
+
+  document.getElementById('whatsappBtn').addEventListener('click', () => {
+    window.open(`https://wa.me/${phoneNumber}?text=${getMessage()}`, '_blank');
+  });
+
+    // Simple intersection observer to reveal sections
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced) return document.querySelectorAll('.section').forEach(s=>s.classList.add('visible'));
+
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            // If this is the summary section, trigger the typewriter
+            if(e.target.id === 'summary') startTypewriter();
+            obs.unobserve(e.target);
+          }
+        });
+      },{threshold:0.12});
+
+      document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+    })();
+
+    // Animate skill bars for users with JS enabled (progressive enhancement)
+    (function(){
+      const bars = document.querySelectorAll('.bar > i');
+      bars.forEach(b=>{
+        const w = b.style.width || '0%';
+        b.style.width = '0%';
+        requestAnimationFrame(()=>{
+          setTimeout(()=> b.style.width = w, 120);
+        });
+      });
+    })();
+
+    // Typewriter animation for the summary
+    function startTypewriter(){
+      const el = document.getElementById('summaryText');
+      if(!el) return;
+      const full = el.getAttribute('data-text') || el.textContent.trim();
+      // If already typed (e.g., user navigated back), don't re-run
+      if(el.dataset.typed === '1') return;
+      // Respect prefers-reduced-motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced){ el.textContent = full; el.dataset.typed = '1'; return; }
+
+      el.textContent = '';
+      el.style.whiteSpace = 'pre-wrap';
+      el.setAttribute('aria-hidden','false');
+      const cursor = document.createElement('span');
+      cursor.setAttribute('aria-hidden','true');
+      cursor.className = 'tw-caret';
+      cursor.textContent = '▊';
+      el.parentNode.appendChild(cursor);
+
+      let idx = 0;
+      const speed = 18 + Math.floor(Math.random()*14); // 18-32ms per char
+      function step(){
+        if(idx <= full.length){
+          el.textContent = full.slice(0, idx);
+          idx++;
+          setTimeout(step, speed + (Math.random()*30));
+        } else {
+          // done
+          cursor.remove();
+          el.dataset.typed = '1';
+        }
+      }
+      step();
+    }
+
+
+
+    // Copy email
+    document.getElementById('copyEmail').addEventListener('click', async ()=>{
+      const email = document.getElementById('email').textContent.trim();
+      try{
+        await navigator.clipboard.writeText(email);
+        const old = document.getElementById('copyEmail').textContent;
+        document.getElementById('copyEmail').textContent = 'Copied!';
+        setTimeout(()=> document.getElementById('copyEmail').textContent = old,1200);
+      }catch(e){
+        alert('Could not copy. Email: ' + email);
+      }
+    });
+
+    // Accessibility: focus outlines for keyboard users
+    (function(){
+      function handleFirstTab(e) {
+        if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+      }
+      window.addEventListener('keydown', handleFirstTab, {once:true});
+    })();
+
+
+
+
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("YOUR_PUBLIC_KEY"); // <-- replace
+  })();
+</script>
+
+
+</body>
+</html>
