@@ -592,6 +592,14 @@ environment by working closely with the stakeholders & solution architect.
 
     window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
   });
+
+      if (localStorage.getItem("verified") === "yes") {
+    document.getElementById("protectedContent").style.display = "block";
+    document.getElementById("blockedMessage").style.display = "none";
+  } else {
+    // Optional redirect
+    // window.location.href = "index.html";
+  }
 </script>
 <script>
   (function(){
