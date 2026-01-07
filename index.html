@@ -1,3 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>EmailJS Access Gate – Sample</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("4_CqucsGov_ltiTmx"); // 🔁 replace
+    })();
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, Arial;
+    }
+
+    /* ACCESS GATE */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .gate-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .gate-card input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .gate-card button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #fb8500;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      padding: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 🔒 ACCESS GATE -->
+<div id="accessGate" class="gate">
+  <div class="gate-card">
+    <h3>Access Required</h3>
+    <p>Please enter your details to continue</p>
+
+    <input id="visitorName" placeholder="Your name" />
+    <input id="visitorEmail" placeholder="Your email" type="email" />
+
+    <button id="requestAccess">Request Access</button>
+  </div>
+</div>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="content">
+  <h1>Protected Resume Content</h1>
+  <p>
+    This content becomes visible only after submitting
+    name and email (soft gate).
+  </p>
+</div>
+
+<script>
+  const gate = document.getElementById("accessGate");
+
+  // If already approved on this device, skip gate
+  if (localStorage.getItem("resume_access") === "yes") {
+    gate.style.display = "none";
+  }
+
+  document.getElementById("requestAccess").addEventListener("click", () => {
+    const name = document.getElementById("visitorName").value.trim();
+    const email = document.getElementById("visitorEmail").value.trim();
+
+    if (!name || !email) {
+      alert("Name and email are required");
+      return;
+    }
+
+    // 📧 SEND EMAIL VIA EMAILJS
+    emailjs.send(
+      "service_wcdlozi",   // 🔁 replace
+      "template_eyb2jb1",  // 🔁 replace
+      {
+        name: name,
+        email: email
+      }
+    ).then(
+      () => {
+        // Remember access on this browser
+        localStorage.setItem("resume_access", "yes");
+
+        // Allow access
+        gate.style.display = "none";
+      },
+      (error) => {
+        alert("Failed to send email. Try again.");
+        console.error(error);
+      }
+    );
+  });
+</script>
+
+</body>
+</html>
 
 <!doctype html>
 <html lang="en">
