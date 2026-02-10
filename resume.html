@@ -1,298 +1,592 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prashant Mishra — Resume</title>
+  <meta name="description" content="Animated resume / CV — modern, responsive, single-file HTML suitable for GitHub Pages." />
 
-  <title>Prashant Mishra — Software Engineer II</title>
-  <meta name="description" content="Software Engineer II with 5+ years of experience in Java, GCP, Kafka, and distributed systems." />
-
-  <!-- SEO / Social -->
-  <meta property="og:title" content="Prashant Mishra — Software Engineer II" />
-  <meta property="og:description" content="Backend & Cloud Engineer | Java | GCP | Kafka | Distributed Systems" />
-  <meta property="og:type" content="website" />
-
-  <!-- Font -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #f5f5f5;
-      --card: linear-gradient(135deg,#ffe3cf,#ffd1b3);
-      --accent: #f59b0a;
-      --text: #1f2937;
-      --muted: rgba(0,0,0,.75);
-      --glass: rgba(0,0,0,.06);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    :root{
+      --bg: #F5F5F5;  /* light orange background */
+      --card: linear-gradient(135deg,#ffe3cf 0%, #ffd1b3 100%);
+      --accent1: #F59B0A;  /* warm orange */
+      --accent2: #F59B0A;  /* deeper orange */
+      --glass: rgba(0,0,0,0.04);
+      --muted: rgba(0,0,0,0.6);
+      --glass-2: rgba(255,255,255,0.03);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      padding: 32px 20px;
-      display: flex;
-      justify-content: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(251,133,0,0.15), transparent 90%),
+        radial-gradient(1000px 500px at 90% 90%, rgba(255,183,3,0.12), transparent 90%),
+        var(--bg);
+  color:#404CF7;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 24px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
     }
 
-    .wrap {
-      width: 100%;
-      max-width: 1100px;
-      display: grid;
+    .wrap{
+      width:100%;
+      max-width:1100px;
+      display:grid;
       grid-template-columns: 320px 1fr;
-      gap: 24px;
+      gap:28px;
     }
 
-    aside, main {
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    /* Left column */
+    .panel{
+      background:var(--card);
+      border-radius:16px;
+      padding:22px;
+      box-shadow:0 6px 30px rgba(2,6,23,0.6);
+      position:relative;
+      overflow:hidden;
     }
 
-    aside {
-      background: var(--card);
-      padding: 22px;
+    .photo{
+      width:100%;
+      max-height:320px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:18px;
+      position:relative;
+    }
+    .photo img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+
+    h1{font-size:22px;margin:6px 0 2px}
+    h2{font-size:14px;margin:0;color:var(--muted);font-weight:600}
+
+    .contact{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6}
+    .contact a{color:inherit;text-decoration:none}
+
+    .skills{margin-top:18px}
+    .skill{margin-bottom:12px}
+    .skill .label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+    .bar{height:10px;background:var(--glass);border-radius:999px;overflow:hidden}
+    .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));transform-origin:left;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
+
+    /* Right column */
+    .content{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:26px;box-shadow:0 6px 30px rgba(2,6,23,0.45);
     }
 
-    main {
-      background: white;
-      padding: 26px;
+    .section{margin-bottom:20px;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .section.visible{opacity:1;transform:none}
+
+    .summary{font-size:15px;color:#3b2f2f;line-height:1.6}
+
+    .timeline{
+      border-left:2px solid rgba(255,255,255,0.04);
+      padding-left:22px; /* adjust this to move entire content right/left */
+      margin-top:12px;
+    }
+    .item{position:relative;padding:12px 0}
+    .item:before{content:'';position:absolute;left:-11px;top:14px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 0 10px rgba(96,165,250,0.12)}
+    .item h3{
+  margin:0;
+  font-size:15px;
+  padding-left:18px; /* GAP after the dot; tweak this value to taste */
+}
+    .item .meta{font-size:13px;color:var(--muted);margin-top:4px}
+
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:12px}
+    .card{background:var(--glass-2);padding:14px;border-radius:12px;backdrop-filter:blur(6px);transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    .card h4{margin:0 0 8px}
+    .card p{margin:0;font-size:13px;color:var(--muted)}
+
+    .actions{display:flex;gap:10px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#04202b;font-weight:600;border:none;cursor:pointer}
+    .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    footer{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .wrap{grid-template-columns:1fr;}
+      .photo{height:260px}
     }
 
-    img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 14px;
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .bar > i{transition:none}
+      .section{transition:none}
+    }
+      @media print {
+  /* Page setup */
+  @page { size: A4; margin: 12mm; }
+
+  body {
+    padding: 0;
+    background: white !important;
+    color: #000 !important;
+  }
+
+  /* Make sure panels and containers do not clip the image */
+  .panel, .photo, .wrap, .content {
+    overflow: visible !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Let the photo take natural height and scale to page nicely */
+  .photo {
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    box-shadow: none !important; /* remove heavy shadows for print */
+    margin: 0 0 12px 0 !important;
+    page-break-after: avoid; /* use "always" if you want the photo on its own page */
+  }
+
+  /* Ensure the <img> fills width but preserves aspect, and won't be cropped */
+  .photo img {
+    display: block !important;
+    margin: 0 auto !important;
+    width: auto !important;           /* prefer natural width to avoid distortion */
+    max-width: 100% !important;       /* but don't exceed column width */
+    height: auto !important;          /* preserve aspect ratio */
+    max-height: calc(297mm - 24mm) !important; /* A4 height minus page margins */
+    object-fit: contain !important;   /* keeps whole image visible */
+  }
+
+  /* If the image still gets cut by other content, force the photo to a full page */
+  /* Uncomment the two rules below to put the photo on its own print page */
+  /*
+  .photo {
+    page-break-before: always !important;
+    page-break-after: always !important;
+  }
+  */
+
+  /* Make content more print-friendly */
+  .panel, .content, .item {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+
+  /* Avoid splitting timeline items */
+  .item { page-break-inside: avoid; }
+
+  /* Optional: keep header/footer small in print */
+  h1, h2, h3 { color: #000 !important; }
+}
+/* 🔹 MESSAGE UI (ADDED) */
+    .message-box{
+      margin-top:18px;
     }
 
-    h1 { margin: 6px 0 2px; font-size: 22px; }
-    h2 { margin: 0; font-size: 14px; color: var(--muted); }
-    h3 { margin-top: 0; }
-
-    .contact div {
-      font-size: 13px;
-      margin-top: 6px;
+    .message-box textarea{
+      width:100%;
+      min-height:70px;
+      resize:none;
+      border-radius:10px;
+      padding:10px;
+      font-family:inherit;
+      font-size:13px;
+      border:1px solid rgba(0,0,0,.2);
+      margin-bottom:10px;
     }
 
-    .skills .skill {
-      margin-bottom: 12px;
+    .message-actions{
+      display:flex;
+      gap:10px;
     }
 
-    .label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-bottom: 4px;
+    .btn{
+      flex:1;
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      border:none;
+      font-weight:700;
+      cursor:pointer;
     }
 
-    .bar {
-      height: 8px;
-      background: var(--glass);
-      border-radius: 999px;
-      overflow: hidden;
+    .btn.outline{
+      background:transparent;
+      border:1px solid rgba(0,0,0,.25);
     }
 
-    .bar span {
-      display: block;
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg,var(--accent),#ffb703);
-      transition: width .9s ease;
+    .btn:hover{opacity:.9}
+
+    footer{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
     }
 
-    .section {
-      margin-bottom: 22px;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: .6s ease;
+    .content{
+      background:white;
+      border-radius:16px;
+      padding:26px;
+      box-shadow:0 6px 30px rgba(2,6,23,.45);
     }
 
-    .section.visible {
-      opacity: 1;
-      transform: none;
+    .timeline{
+      border-left:2px solid rgba(0,0,0,.1);
+      padding-left:22px;
     }
 
-    .timeline {
-      border-left: 2px solid #ddd;
-      padding-left: 20px;
+    .item{
+      position:relative;
+      padding:12px 0;
     }
 
-    .item {
-      position: relative;
-      padding: 12px 0;
+    .item:before{
+      content:'';
+      position:absolute;
+      left:-11px;
+      top:16px;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
     }
 
-    .item::before {
-      content: '';
-      position: absolute;
-      left: -11px;
-      top: 18px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:14px;
     }
 
-    .meta {
-      font-size: 13px;
-      color: var(--muted);
+    .card{
+      background:var(--glass-2);
+      padding:14px;
+      border-radius:12px;
     }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 14px;
-    }
-
-    .card {
-      background: #fafafa;
-      padding: 14px;
-      border-radius: 12px;
-    }
-
-    button {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .btn {
-      background: linear-gradient(90deg,var(--accent),#ffb703);
-    }
-
-    .btn.outline {
-      background: transparent;
-      border: 1px solid #aaa;
-    }
-
-    @media(max-width:880px) {
-      .wrap { grid-template-columns: 1fr; }
-    }
-
-    @media print {
-      body { background: white; padding: 0; }
-      aside, main { box-shadow: none; }
+    @media(max-width:880px){
+      .wrap{grid-template-columns:1fr}
     }
   </style>
 </head>
-
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <aside class="panel">
+      <div class="photo" aria-hidden="true">
+        <!-- Replace with your photo or avatar -->
+        <img src="IMG_1066.png" alt="Profile photo">
+      </div>
 
-  <aside>
-    <img src="IMG_1066.png" alt="Prashant Mishra">
+      <h1>Prashant Mishra</h1>
+      <h2>Software Engineer II</h2>
 
-    <h1>Prashant Mishra</h1>
-    <h2>Software Engineer II</h2>
+      <div class="contact">
+        <div><strong>Email:</strong> <a href="#" id="email">pm700693@gmail.com</a></div>
+        <div><strong>Location:</strong> Gurugram, India</div>
+        <div><strong>LinkedIn:</strong> <a href="#" target="_blank">https://www.linkedin.com/in/pm700693/</a></div>
+      </div>
 
-    <div class="contact">
-      <div>Email: <strong>REDACTED</strong></div>
-      <div>Location: Gurugram, India</div>
-      <div>
-        LinkedIn:
-        <a href="https://www.linkedin.com/in/pm700693/" target="_blank">pm700693</a>
+      <div class="skills">
+        <h3 style="margin:12px 0 10px">Skills</h3>
+        <div class="skill">
+          <div class="label"><span>Google Cloud Platform (BigQuery, Dataflow, Dataproc, Cloud Storage, Pub/Sub,
+Composer), Aws &amp; CSS</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>JavaScript, Html / TypeScript</span><span>90%</span></div>
+          <div class="bar"><i style="width:98%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>Apache Spark / Next.js</span><span>93%</span></div>
+          <div class="bar"><i style="width:97%"></i></div>
+        </div>
+        <div class="skill">
+          <div class="label"><span>Kafka</span><span>95%</span></div>
+          <div class="bar"><i style="width:93%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Hadoop</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Airflow</span><span>95%</span></div>
+          <div class="bar"><i style="width:92%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Pyspark</span><span>95%</span></div>
+          <div class="bar"><i style="width:90%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Python</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+          </div>
+          <div class="skill">
+          <div class="label"><span>Java</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+
+          <div class="skill">
+          <div class="label"><span>Sql</span><span>95%</span></div>
+          <div class="bar"><i style="width:94%"></i></div>
+        </div>
+          <div class="skill">
+          <div class="label"><span>Docker</span><span>95%</span></div>
+          <div class="bar"><i style="width:83%"></i></div>
+        </div>
+         <div class="skill">
+          <div class="label"><span>Git</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+         <div class="skill">
+          <div class="label"><span>Terraform</span><span>95%</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+        </div>
+
+      </div>
+    <div class="message-box">
+      <textarea id="customMessage" placeholder="Type your message here..."></textarea>
+      <div class="message-actions">
+        <button class="btn outline" id="smsBtn">Send SMS</button>
+        <button class="btn" id="whatsappBtn">WhatsApp</button>
+        <button class="btn outline" id="emailBtn">Email</button>
       </div>
     </div>
 
-    <div class="skills">
-      <h3>Skills</h3>
+    <footer>Contact via SMS or WhatsApp</footer>
 
-      <div class="skill">
-        <div class="label"><span>Java / Spring Boot</span><span>5+ yrs</span></div>
-        <div class="bar"><span style="width:95%"></span></div>
-      </div>
+      <footer style="margin-top:12px">+91-9728514902</footer>
+    </aside>
 
-      <div class="skill">
-        <div class="label"><span>GCP / BigQuery / Dataflow</span><span>4 yrs</span></div>
-        <div class="bar"><span style="width:92%"></span></div>
-      </div>
+    <main class="content">
+      <section class="section" id="summary">
+        <h3 style="margin-top:0">Summary</h3>
+        <!-- Animated summary: typing effect with reduced-motion fallback -->
+        <p class="summary" aria-live="polite">
+          <span id="summaryText" data-text="Software Engineer II with 5+ years of experience building scalable, high-performance backend systems using Java and cloud-native technologies. Strong foundation in data structures, algorithms, object-oriented design, and distributed systems. Experienced in designing microservices, REST APIs, real-time event-driven systems, and large-scale data processing platforms. Proven track record of improving system performance, reliability, and cost efficiency in enterprise-grade production environments."</span>
+          <noscript> (Enable JavaScript to see the animated summary.)</noscript>
+        </p>
+      </section>
 
-      <div class="skill">
-        <div class="label"><span>Kafka / PubSub</span><span>4 yrs</span></div>
-        <div class="bar"><span style="width:90%"></span></div>
-      </div>
+      <section class="section" id="experience">
+        <h3>Experience</h3>
+        <div class="timeline">
+          <div class="item">
+            <h3> Software Engineer II — American Express</h3>
+            <div class="meta">June 2024 — Present • Gurugram, India</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Designed and developed backend microservices using Java 17 and Spring Boot, supporting rule engines, anomaly detection, and orchestration platforms.
+            - Built scalable, event-driven systems using Kafka and Pub/Sub to process high-throughput data streams with low latency.
+            - Designed REST APIs and asynchronous workflows for integrating Python-based ML services with Java backend systems.
+            - Improved system performance and reliability by implementing monitoring, alerting, and fault-tolerant processing mechanisms.
+            - Optimized database schemas and query patterns (BigQuery, Couchbase), reducing infrastructure cost by 35%.
+            - Collaborated with product managers, architects, and DevOps teams in a large-scale product-based organization.
+</p>
+          </div>
 
-      <div class="skill">
-        <div class="label"><span>Python / Spark</span><span>3 yrs</span></div>
-        <div class="bar"><span style="width:88%"></span></div>
-      </div>
-    </div>
-
-    <button class="btn outline" onclick="window.print()">Download PDF</button>
-  </aside>
-
-  <main>
-
-    <section class="section" id="summary">
-      <h3>Summary</h3>
-      <p>
-        Software Engineer II with 5+ years of experience building scalable backend systems
-        using Java, cloud-native architectures, and event-driven platforms. Proven record
-        of improving performance, reliability, and cost efficiency in production systems.
-      </p>
-    </section>
-
-    <section class="section">
-      <h3>Experience</h3>
-      <div class="timeline">
-
-        <div class="item">
-          <h4>Software Engineer II — American Express</h4>
-          <div class="meta">Jun 2024 – Present | Gurugram</div>
-          <p>
-            Designed Kafka-based microservices processing 5M+ events/day.
-            Reduced BigQuery cost by 35% via schema and query optimization.
-          </p>
+          <div class="item">
+            <h3>Systems Engineer — Tata Consultancy Services</h3>
+            <div class="meta">March 2023 — June 2024 • Noida</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Developed backend services and data processing components using Python and Spark as part of distributed systems for a large banking client.
+            - Designed and maintained batch and real-time processing workflows on cloud platforms.
+            - Worked closely with architects to translate business requirements into scalable technical designs.
+            - Improved performance of distributed jobs using partitioning, caching, and efficient join strategies.
+</p>
+          </div>
+          <div class="item">
+            <h3>Associate Software Engineer — Mphasis</h3>
+            <div class="meta">Feb 2021 — Feb 2023 • Pune</div>
+            <p style="margin-top:8px;font-size:14px;color:var(--muted)">- Developed and maintained Java backend components for enterprise applications.
+            - Fixed production issues, refactored legacy code, and improved overall code quality.
+            - Wrote JUnit test cases with 90%+ code coverage and integrated builds using Jenkins.
+            - Built AWS-based backend components using Lambda, DynamoDB, and S3.
+            - Used SQL extensively for debugging, reporting, and data validation.
+</p>
+          </div>
         </div>
+      </section>
 
-        <div class="item">
-          <h4>Systems Engineer — TCS</h4>
-          <div class="meta">Mar 2023 – Jun 2024</div>
-          <p>
-            Built Spark pipelines and batch workflows for a large banking client.
-          </p>
+      <section class="section" id="projects">
+        <h3>Projects</h3>
+        <div class="projects">
+          <article class="card">
+            <h4>Real-Time Analytics Platform (GCP)</h4>
+            <p>- Designed a streaming pipeline using Pub/Sub → Dataflow → BigQuery
+               - Processed 1M+ events/day with sub-second latency.</p>
+          </article>
+
+          <article class="card">
+            <h4>Cloud Data Warehouse Migration</h4>
+            <p>- Led migration from legacy SQL systems to BigQuery
+               - Improved reporting performance by 4× and reduced maintenance overhead</p>
+          </article>
+
         </div>
+      </section>
 
-      </div>
-    </section>
+      <section class="section" id="education">
+        <h3>Education</h3>
+        <p class="meta" style="margin-top:6px;color:var(--muted)">B.Tech — Computer Science, Chandigarh Engineering College (2016 — 2020)</p>
+      </section>
 
-    <section class="section">
-      <h3>Projects</h3>
-      <div class="projects">
-        <div class="card">
-          <h4>Real-Time Analytics Platform</h4>
-          <p>Pub/Sub → Dataflow → BigQuery pipeline with sub-second latency.</p>
-        </div>
-        <div class="card">
-          <h4>Data Warehouse Migration</h4>
-          <p>Legacy SQL → BigQuery, 4× faster reporting.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <h3>Education</h3>
-      <p class="meta">B.Tech — Computer Science (2016–2020)</p>
-    </section>
 
-  </main>
-</div>
+    </main>
+  </div>
 
-<script>
-  // Reveal animations
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+  <script>
+
+      const phoneNumber = '919728514902';
+
+  function getMessage() {
+    const text = document.getElementById('customMessage').value.trim();
+    return encodeURIComponent(
+      text || 'Hi Prashant, I viewed your resume and would like to connect.'
+    );
+  }
+
+  document.getElementById('smsBtn').addEventListener('click', () => {
+    window.location.href = `sms:${phoneNumber}?body=${getMessage()}`;
+  });
+
+  document.getElementById('whatsappBtn').addEventListener('click', () => {
+    window.open(`https://wa.me/${phoneNumber}?text=${getMessage()}`, '_blank');
+  });
+
+    // Simple intersection observer to reveal sections
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced) return document.querySelectorAll('.section').forEach(s=>s.classList.add('visible'));
+
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            // If this is the summary section, trigger the typewriter
+            if(e.target.id === 'summary') startTypewriter();
+            obs.unobserve(e.target);
+          }
+        });
+      },{threshold:0.12});
+
+      document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+    })();
+
+    // Animate skill bars for users with JS enabled (progressive enhancement)
+    (function(){
+      const bars = document.querySelectorAll('.bar > i');
+      bars.forEach(b=>{
+        const w = b.style.width || '0%';
+        b.style.width = '0%';
+        requestAnimationFrame(()=>{
+          setTimeout(()=> b.style.width = w, 120);
+        });
+      });
+    })();
+
+    // Typewriter animation for the summary
+    function startTypewriter(){
+      const el = document.getElementById('summaryText');
+      if(!el) return;
+      const full = el.getAttribute('data-text') || el.textContent.trim();
+      // If already typed (e.g., user navigated back), don't re-run
+      if(el.dataset.typed === '1') return;
+      // Respect prefers-reduced-motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced){ el.textContent = full; el.dataset.typed = '1'; return; }
+
+      el.textContent = '';
+      el.style.whiteSpace = 'pre-wrap';
+      el.setAttribute('aria-hidden','false');
+      const cursor = document.createElement('span');
+      cursor.setAttribute('aria-hidden','true');
+      cursor.className = 'tw-caret';
+      cursor.textContent = '▊';
+      el.parentNode.appendChild(cursor);
+
+      let idx = 0;
+      const speed = 18 + Math.floor(Math.random()*14); // 18-32ms per char
+      function step(){
+        if(idx <= full.length){
+          el.textContent = full.slice(0, idx);
+          idx++;
+          setTimeout(step, speed + (Math.random()*30));
+        } else {
+          // done
+          cursor.remove();
+          el.dataset.typed = '1';
+        }
+      }
+      step();
+    }
+
+
+
+    // Copy email
+    document.getElementById('copyEmail').addEventListener('click', async ()=>{
+      const email = document.getElementById('email').textContent.trim();
+      try{
+        await navigator.clipboard.writeText(email);
+        const old = document.getElementById('copyEmail').textContent;
+        document.getElementById('copyEmail').textContent = 'Copied!';
+        setTimeout(()=> document.getElementById('copyEmail').textContent = old,1200);
+      }catch(e){
+        alert('Could not copy. Email: ' + email);
       }
     });
-  }, { threshold: 0.15 });
 
-  sections.forEach(s => observer.observe(s));
+    // Accessibility: focus outlines for keyboard users
+    (function(){
+      function handleFirstTab(e) {
+        if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+      }
+      window.addEventListener('keydown', handleFirstTab, {once:true});
+    })();
+
+
+
+
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+  const myEmail = "pm700693@gmail.com";
+
+  document.getElementById("emailBtn").addEventListener("click", () => {
+    const message =
+      document.getElementById("customMessage")?.value.trim() ||
+      "Hi Prashant, I viewed your resume and would like to connect.";
+
+    const subject = encodeURIComponent("Regarding Your Resume");
+    const body = encodeURIComponent(message);
+
+    window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+  });
+
+      if (localStorage.getItem("verified") === "yes") {
+    document.getElementById("protectedContent").style.display = "block";
+    document.getElementById("blockedMessage").style.display = "none";
+  } else {
+    // Optional redirect
+    // window.location.href = "index.html";
+  }
 </script>
+<script>
+  (function(){
+    emailjs.init("4_CqucsGov_ltiTmx"); // <-- replace
+  })();
+</script>
+
+
 </body>
 </html>
